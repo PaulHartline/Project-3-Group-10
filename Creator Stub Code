@@ -1,0 +1,36 @@
+import java.util.ArrayList;
+
+/**
+ * Project #3
+ * CS 2334, Section 011
+ * Mar 3, 2016
+ * <P>
+ * Class for storing information about Creators (actors, directors, producers)
+ * </P>
+ */
+public class Creators extends Show {
+	/**List to contain the actors in a movie/series*/
+	private ArrayList<String> actors = new ArrayList<String>();
+	
+	/**List to contain the directors for a movie/series*/
+	private ArrayList<String> directors = new ArrayList<String>();
+	
+	/**List to contain the publishers for a movie/series*/
+	private ArrayList<String> publishers = new ArrayList<String>();
+	
+	/**Constructor for Creators
+	 * 
+	 * @param actors List of actors in a movie/series
+	 * @param directors List of directors for a movie/series
+	 * @param publishers List of publishers for a movie/series
+	 */
+	public Creators(ArrayList<String> actors, ArrayList<String> directors, ArrayList<String>  publishers) {
+	}
+	
+	/**
+	 * Returns a string representing the creators
+	 */
+	public String toString() {
+		return null;
+	}
+}
