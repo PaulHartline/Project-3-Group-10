@@ -16,11 +16,11 @@ public class Creator extends Show {
 
 	
 	/** List that stores information about actors  */
-	private static ArrayList<Creator> actors = new ArrayList<Creator>();
+	public static ArrayList<Creator> actors = new ArrayList<Creator>();
 	/** List that stores information about directors */
-	private static ArrayList<Creator> directors = new ArrayList<Creator>();
+	public static ArrayList<Creator> directors = new ArrayList<Creator>();
 	/** List that stores information about producers */
-	private static ArrayList<Creator> producers = new ArrayList<Creator>();
+	public static ArrayList<Creator> producers = new ArrayList<Creator>();
 	/** A <code>LinkedHashMap</code> of a list of creators */
 	private static LinkedHashMap<String, ArrayList<Creator>> creatorList;
 	/** The name of the creator */

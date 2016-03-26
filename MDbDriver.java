@@ -37,7 +37,31 @@ public class MDbDriver {
 				TVFile = inputReader.readLine();
 				TV = new File(TVFile);
 			}
-			MovieDatabase mDb = new MovieDatabase(movieFile, TVFile);
+			System.out.println("What is the Actor file?");
+			String actorFile = inputReader.readLine();
+			File actors = new File(actorFile);
+			while (!actors.exists()) {
+				System.out.println("Sorry, not valid input. Try again");
+				actorFile = inputReader.readLine();
+				actors = new File(actorFile);
+			}
+			System.out.println("What is the Director file?");
+			String directorFile = inputReader.readLine();
+			File directors = new File(directorFile);
+			while (!directors.exists()) {
+				System.out.println("Sorry, not valid input. Try again");
+				directorFile = inputReader.readLine();
+				directors = new File(directorFile);
+			}
+			System.out.println("What is the Producer file?");
+			String producerFile = inputReader.readLine();
+			File producers = new File(producerFile);
+			while (!producers.exists()) {
+				System.out.println("Sorry, not valid input. Try again");
+				producerFile = inputReader.readLine();
+				producers = new File(producerFile);
+			}
+			MovieDatabase mDb = new MovieDatabase(movieFile, TVFile, actorFile, directorFile, producerFile);
 			while (true) {
 				System.out.println("Search (M)ovies, (S)eries, or (B)oth? (n to quit)");
 				String MSB = inputReader.readLine();
