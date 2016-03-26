@@ -226,7 +226,7 @@ public class Creator extends Show {
 		creatorList.put("PRODUCING", producers);
 		return producers;
 	}
-		public static void addCredits() {
+	public static void addCredits() {
 		int directorCredits = 0;
 		int producerCredits = 0;
 		int actorCredits = 0;
