@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -12,8 +13,10 @@ import java.util.LinkedHashMap;
  * Class for storing information about a creator
  *</P>
  */
-public class Creator extends Show {
+public class Creator extends Show implements Serializable{
 
+	
+	private static final long serialVersionUID = 1L;
 	
 	/** List that stores information about actors  */
 	public static ArrayList<Creator> actors = new ArrayList<Creator>();

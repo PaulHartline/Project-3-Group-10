@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,9 @@ import java.util.ArrayList;
  * Class for storing information about a single movie
  * </P>
  */
-public class Movie extends Show {
+public class Movie extends Show implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	/**List to store any extra info about the movie*/
 	private ArrayList<String> extraInfo = new ArrayList<String>();

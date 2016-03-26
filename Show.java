@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -8,8 +9,10 @@ import java.util.Comparator;
  * Superclass for movies and TV shows to extend
  * </P>
  */
-public class Show {
+public class Show implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	/**Name of show*/
 	private String name;
 	/**Year show is first released*/

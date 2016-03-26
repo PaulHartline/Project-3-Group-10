@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,9 @@ import java.util.ArrayList;
  * Class for storing information about TVShows
  * </P>
  */
-public class TVSeries extends Show {
+public class TVSeries extends Show implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 
 	/**ArrayList of episodes within a series*/
 	ArrayList<Episode> episodes = new ArrayList<Episode>();

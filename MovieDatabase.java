@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -13,11 +14,18 @@ import java.util.Collections;
  * to parse and add shows and search for them
  * </P>
  */
-public class MovieDatabase {
+public class MovieDatabase implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	/**List containing all the movies and TV shows*/
 	private ArrayList<Show> mDb = new ArrayList<Show>();
 	private ArrayList<Creator> cDb = new ArrayList<Creator>();
+	
+	public MovieDatabase()
+	{
+		//intentionally empty
+	}
 	
 	/**Constructor for MDb class. 
 	 * 

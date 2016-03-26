@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * Project #1
  * CS 2334, Section 011
@@ -6,8 +8,10 @@
  * Individual episode within a TV series
  * </P>
  */
-public class Episode extends Show {
-
+public class Episode extends Show implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	/**Number of episode within series*/
 	private String episodeNumber;
 	/**Series that this episode is in*/
