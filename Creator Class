@@ -226,10 +226,10 @@ public class Creator extends Show {
 		creatorList.put("PRODUCING", producers);
 		return producers;
 	}
-	public static void addCredits() {
+	
+	public static int directorCredits() {
 		int directorCredits = 0;
-		int producerCredits = 0;
-		int actorCredits = 0;
+		
 		while(!directors.isEmpty()) {
 			for(int i = 0; i<directors.size(); ++i) {
 				String director = directors.get(i).toString();
@@ -242,7 +242,13 @@ public class Creator extends Show {
 					}
 				}
 			}
-		}
+		} 
+		return directorCredits;
+	}
+	
+	public static int producerCredits() {
+		int producerCredits = 0;
+		
 		while(!producers.isEmpty()){
 			for(int i = 0; i<producers.size(); ++i) {
 				String producer = producers.get(i).toString();
@@ -256,6 +262,11 @@ public class Creator extends Show {
 				}
 			}
 		}
+		return producerCredits;
+		}
+		
+	public static int actorCredits() {
+		int actorCredits = 0;
 		while(!actors.isEmpty()){
 			for(int i = 0; i<actors.size(); ++i) {
 				String actor = actors.get(i).toString();
@@ -269,7 +280,9 @@ public class Creator extends Show {
 				}
 			}
 		}
+		return actorCredits;
 	}
+	
 	/**
 	 * Returns a string that represent the creators
 	 */
