@@ -20,8 +20,9 @@ public class MDbDriver implements Serializable{
 	
 	/**Initializes the database and runs program based on user input
 	 * @param args Useless for this program
+	 * @throws ClassNotFoundException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException {
 		BufferedReader inputReader= new BufferedReader(new InputStreamReader(System.in));
 		try {
 			System.out.println("Read (t)ext or (b)inary data?Åh");
@@ -158,7 +159,10 @@ public class MDbDriver implements Serializable{
 			}
 			else
 			{
-				//read in binary file
+				System.out.println("Enter a file name to read in");
+				String inputFile = inputReader.readLine();
+				MovieDatabase.readDatabase(inputFile);
+				
 			}
 			
 			while (true) {
@@ -333,28 +337,48 @@ public class MDbDriver implements Serializable{
 		    		yn = inputReader.readLine();
 			    }
 	    		if(yn.equalsIgnoreCase("y")){
-			    	System.out.println("Enter a file to save to:");
-			    	File saved = new File(inputReader.readLine());
+	    			System.out.println("Write (t)ext or (b)inary data?");
+	    			String ToB = inputReader.readLine();
+	    			while (!ToB.equalsIgnoreCase("y") && !ToB.equalsIgnoreCase("n")) {
+			    		System.out.println("Sorry, not valid input. Try Again");
+			    		ToB = inputReader.readLine();
+	    			}
+	    			if (ToB.equalsIgnoreCase("t"))
+	    			{
+	    				System.out.println("Enter a file to save to:");
+	    				File saved = new File(inputReader.readLine());
 			    	
-			    	PrintWriter out = new PrintWriter(saved);
+	    				PrintWriter out = new PrintWriter(saved);
 			    	
-			    	System.out.println("Saving...");
-			    	if (MoP.equalsIgnoreCase("M"))
-			    	{
-			    		for(Show show : results)
-			    			out.println(show.toString());
-			    	}
-			    	else
-			    	{
-			    		for (Creator creator : creatorResults)
-			    			out.println(creator.toString());
-			    	}
-			    	System.out.println("Done");
-			    	out.close();
+	    				System.out.println("Saving...");
+	    				if (MoP.equalsIgnoreCase("M"))
+	    				{
+	    					for(Show show : results)
+	    						out.println(show.toString());
+	    				}
+	    				else
+	    				{
+	    					for (Creator creator : creatorResults)
+			    				out.println(creator.toString());
+	    				}
+	    				System.out.println("Done");
+	    				out.close();
+	    			}
+	    			else
+	    			{
+	    				System.out.println("Enter a file to save to:");
+	    				String fileName = inputReader.readLine();
+	    				MovieDatabase.writeDatabase(fileName, mDb);
+	    			}
 			    	
 			    } else if (yn.equalsIgnoreCase("n")){
 			    	System.out.println("Your results will not be saved.");
 			    }
+	    		
+	    		System.out.println("Continue? (Y/N)");
+	    		userContinue = inputReader.readLine();
+	    		if (userContinue.equalsIgnoreCase("N"))
+	    			System.exit(0);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

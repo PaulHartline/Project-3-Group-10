@@ -1,6 +1,10 @@
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -350,5 +354,22 @@ public class MovieDatabase implements Serializable{
 	private Creator parseProducer(String line)
 	{
 		return null;
+	}
+	
+	public static void writeDatabase(String filename, MovieDatabase database) throws IOException
+	{
+		FileOutputStream fileOutputStream = new FileOutputStream(filename);
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+		objectOutputStream.writeObject(database);
+		objectOutputStream.close();
+	}
+	
+	public static MovieDatabase readDatabase(String filename) throws IOException, ClassNotFoundException
+	{
+		FileInputStream fileInputStream = new FileInputStream(filename);
+		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+		MovieDatabase database = (MovieDatabase) objectInputStream.readObject();
+		objectInputStream.close();
+		return database;
 	}
 }
