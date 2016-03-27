@@ -1,10 +1,6 @@
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -238,7 +234,7 @@ public class MovieDatabase implements Serializable{
 						}
 					}
 				}
-		Collections.sort(creators, Show.TITLE_COMPARATOR);
+		Collections.sort(creators, Creator.TITLE_COMPARATOR);
 		return creators;
 	}
 	

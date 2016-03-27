@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 
 /**
@@ -676,6 +677,13 @@ if (nextLine.contains(",") && nextLine.contains("\t")) {
 	public String toString() {
 		return "";
 	}
+	
+	public static final Comparator<Creator> TITLE_COMPARATOR = new Comparator<Creator>() {
+		@Override
+		public int compare(Creator o1, Creator o2) {
+			return o1.name.compareTo(o2.name); 
+		}
+	};
 	
 	// for testing purposes
 	public String getName() {
