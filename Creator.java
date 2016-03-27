@@ -1,10 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
 
 /**
  * Project #3
@@ -14,18 +11,15 @@ import java.util.LinkedHashMap;
  * Class for storing information about a creator
  *</P>
  */
-public class Creator extends Show implements Serializable{
+public class Creator extends Show {
 
-	static final long serialVersionUID = 1L;
 	
 	/** List that stores information about actors  */
-	public static ArrayList<Creator> actors = new ArrayList<Creator>();
+	private static ArrayList<Creator> actors = new ArrayList<Creator>();
 	/** List that stores information about directors */
-	public static ArrayList<Creator> directors = new ArrayList<Creator>();
+	private static ArrayList<Creator> directors = new ArrayList<Creator>();
 	/** List that stores information about producers */
-	public static ArrayList<Creator> producers = new ArrayList<Creator>();
-	/** A <code>LinkedHashMap</code> of a list of creators */
-	private static LinkedHashMap<String, ArrayList<Creator>> creatorList = new LinkedHashMap<String, ArrayList<Creator>>();
+	private static ArrayList<Creator> producers = new ArrayList<Creator>();
 	/** The name of the creator */
 	private String name;
 	/** The title of the work that is associated with its creator */
@@ -51,17 +45,19 @@ public class Creator extends Show implements Serializable{
 	
 	/**
 	 * Constructor for Creator: actor
-	 * @param name
-	 * @param title
-	 * @param year
-	 * @param type
-	 * @param archiveFootage
-	 * @param charName
-	 * @param billingOrder
+	 * @param name The name of the creator
+	 * @param title	The title of the work associated with the creator
+	 * @param year The year the work was released
+	 * @param type The type of work (TV or V)
+	 * @param archiveFootage Determines if the work was archived
+	 * @param charName The name of the character being played by an actor
+	 * @param billingOrder Employee's paycheck
 	 */
 	public Creator(String name, String title, String year, String episodeTitle, String episodeNumber,
 			String type, String role, String archiveFootage, String credit, String charName, String billingOrder) {
 		super(name, year, year);
+		this.name = name;
+		this.year = year;
 		this.title = title;
 		this.episodeTitle = episodeTitle;
 		this.episodeNumber = episodeNumber;
@@ -75,15 +71,17 @@ public class Creator extends Show implements Serializable{
 	
 	/**
 	 * Constructor for Creator: director
-	 * @param name
-	 * @param title
-	 * @param year
-	 * @param type
-	 * @param credit
+	 * @param name The name of the creator
+	 * @param title The title of the work associated with the creator
+	 * @param year The year the work was released
+	 * @param type The type of work (TV or V)
+	 * @param credit Determines if the creator was credited or not
 	 */
 	public Creator(String name, String title, String year, String episodeTitle,
 			String episodeNumber, String type, String credit) {
 		super(name, year, year);
+		this.name = name;
+		this.year = year;
 		this.title = title;
 		this.episodeTitle = episodeTitle;
 		this.episodeNumber = episodeNumber;
@@ -93,16 +91,18 @@ public class Creator extends Show implements Serializable{
 	
 	/**
 	 * Constructor for Creator: producer
-	 * @param name
-	 * @param title
-	 * @param year
-	 * @param type
-	 * @param role
-	 * @param credit
+	 * @param name The name of the creator
+	 * @param title The title of the work associated with the creator
+	 * @param year THe year the work was released
+	 * @param type The type of work (TV or V)
+	 * @param role The role the creator had in production
+	 * @param credit Determines if the creator was credited or not
 	 */
 	public Creator(String name, String title, String year, String episodeTitle, String episodeNumber,
 			String type, String role, String credit) {
 		super(name, year, year);
+		this.name = name;
+		this.year = year;
 		this.title = title;
 		this.type = type;
 		this.episodeTitle = episodeTitle;
@@ -111,10 +111,10 @@ public class Creator extends Show implements Serializable{
 		this.credit = credit;
 	}
 	/**
-	 * 
-	 * @param actor
-	 * @param br
-	 * @return
+	 * Fills the actor array with actors from a file.
+	 * @param actor Actor file being read through.
+	 * @param br BufferedReader that reads the file
+	 * @return Returns an arraylist of actors to be used later.
 	 * @throws IOException
 	 */
 	public static ArrayList<Creator> fillActors (File actor, BufferedReader br) throws IOException {
@@ -140,103 +140,41 @@ public class Creator extends Show implements Serializable{
 			nextLine = br.readLine();
 			
 			// year is always constant for each type of line being parsed
-			year = nextLine.substring(nextLine.indexOf("("), nextLine.indexOf(")"));
-			
-			// aquires the line after the "\n" line, that has the actor's name and has a space followed by a tab
-			if (nextLine.contains(",") && nextLine.contains("\\s\t")) {
-			
-				// if the charName is present
-				if (nextLine.contains("[")) {
-				charName = nextLine.substring(nextLine.indexOf("["), nextLine.indexOf("]"));
-				}
-				
-				// if the billingOrder is present
-				if (nextLine.contains("<")) {
-				billingOrder = nextLine.substring(nextLine.indexOf("<"), nextLine.indexOf(">"));
-				}
-				
-				// if archiveFootage is present
-				if (nextLine.contains("(archive footage)")) {
-					archiveFootage = "(archive footage)";
-				}
-				
-				// if episode information is present
-				if (nextLine.contains("{")) {
-					episodeTitle = nextLine.substring(nextLine.indexOf("{"), nextLine.indexOf("}"));
-					
-					
-					// checks if episode number is in the episode title
-					if (episodeTitle.contains("#")) {
-						
-					// gives episode number the correct value
-					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("),
-							episodeTitle.indexOf(")"));
-					// removes episode number value from episode title
-					// if episode number is only present, then assigns empty string to episodeTitle
-					episodeTitle = episodeTitle.substring(episodeTitle.indexOf("{"),
-							episodeTitle.indexOf("(") - 1);
-					}
-				}
-				
-				// if type is present
-				if (nextLine.contains("(TV)") || nextLine.contains("(V)")) {
-					// gives type the corresponding value 
-					if (nextLine.contains("(TV)")) {
-						type = "(TV)";
-					}
-					// gives type the corresponding value
-					if (nextLine.contains("(V)")) {
-						type = "(V)";
-					}
-				}
-				
-				// assigns title a value, name will always be followed by \\s\t
-				title = nextLine.substring(nextLine.indexOf("\t"),nextLine.indexOf("(") + 1).trim();
-				
-				// assigns name a value
-				name = nextLine.substring(nextLine.length(), nextLine.indexOf("\t")).trim();
-				
-				// if role is present, if not role remains empty
-				if (nextLine.contains("(voice)")) {
-				role = "(voice)";
-				}
-				
-				// if credit is present, if not credit remains empty
-				if (nextLine.contains("(uncredited)")) {
-				credit = "(uncredited)";
-				}
-				
-				actors.add(new Creator(name, title, year, episodeTitle, episodeNumber,
-						type, role, archiveFootage, credit, charName, billingOrder));
-			}
+			year = nextLine.substring(nextLine.indexOf("("), nextLine.indexOf(")") + 1);
 			
 			// aquires line that has the actor's name present and is followed by a tab
 			if (nextLine.contains(",") && nextLine.contains("\t")) {
 			
 				// if billingOrder is present
 				if (nextLine.contains("<")) {
-				billingOrder = nextLine.substring(nextLine.indexOf("<"), nextLine.indexOf(">"));
+				billingOrder = nextLine.substring(nextLine.indexOf("<"), nextLine.indexOf(">") + 1);
 				}
 				
 				// if charName is present
 				if (nextLine.contains("[")) {
-					charName = nextLine.substring(nextLine.indexOf("["), nextLine.indexOf("]"));
+					charName = nextLine.substring(nextLine.indexOf("["), nextLine.indexOf("]") + 1);
+				}
+				
+				// if episode number is only present
+				if (nextLine.contains("{(#")) {
+					episodeNumber = nextLine.substring(nextLine.indexOf("{"), nextLine.indexOf("}") + 1);
 				}
 				
 				// if episode information is present
 				if (nextLine.contains("{")) {
-					episodeTitle = nextLine.substring(nextLine.indexOf("{"), nextLine.indexOf("}"));
 					
-					// checks if episode number is in the episode title
+					// checks for "SUSPENDED"
+					if (nextLine.contains("{{")) {
+						episodeTitle = "SUSPENDED";
+						episodeNumber = "";
+					}
+					else {
+					episodeTitle = nextLine.substring(nextLine.indexOf("{") + 1, nextLine.indexOf("}"));
+					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("), episodeTitle.indexOf(")") + 1);
+					}
+					// if episodeNumber is part of episodeTitle
 					if (episodeTitle.contains("#")) {
-						
-					// gives episode number the correct value
-					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("),
-							episodeTitle.indexOf(")"));
-					// removes episode number value from episode title
-					// if episode number is only present, then assigns empty string to episodeTitle
-					episodeTitle = episodeTitle.substring(episodeTitle.indexOf("{"),
-							episodeTitle.indexOf("(") - 1);
+						episodeTitle = episodeTitle.substring(0, episodeTitle.indexOf("(")).trim();
 					}
 				}
 				
@@ -253,20 +191,50 @@ public class Creator extends Show implements Serializable{
 				}
 				
 				// if role is present, if not role remains empty
-				if (nextLine.contains("(voice)")) {
+				if (nextLine.contains("voice")) {
 				role = "(voice)";
 				}
 				
 				// if credit is present, if not credit remains empty
-				if (nextLine.contains("(uncredited)")) {
-				credit = "(uncredited)";
+				if (nextLine.contains("rumored")) {
+					credit = "(rumored)";
 				}
 				
-				// assigns title a value
-				title = nextLine.substring(nextLine.indexOf("\t"),nextLine.indexOf("(") + 1).trim();
+				if (nextLine.contains("uncredited")) {
+						credit = "(uncredited)";
+				}
+				
+				// reads in last occurance of parentheses
+				if (nextLine.contains("(as")) {
+					credit = nextLine.substring(nextLine.lastIndexOf("("), nextLine.lastIndexOf(")") + 1);
+				}
+				
+				// if archiveFootage is present, if not archiveFootage remains empty
+				if (nextLine.contains("archive footage")) {
+					archiveFootage = "(archive footage)";
+				}
 				
 				// assigns name a value
-				name = nextLine.substring(nextLine.length(), nextLine.indexOf("\t")).trim();
+				name = nextLine.substring(0, nextLine.indexOf("\t")).trim();
+				
+				// if name has parentheses
+				if (name.contains("(")) {
+					title = nextLine.substring(nextLine.indexOf("\t"),
+							nextLine.indexOf("(", nextLine.indexOf("(") + 1)).trim();
+					// change year to appropiate value if parentheses in name is present
+					year = nextLine.substring(nextLine.indexOf("(", nextLine.indexOf("(") + 1),
+							nextLine.indexOf(")", nextLine.indexOf(")") + 1) + 1).trim();
+				}
+				else {
+				// assigns title a value
+				title = nextLine.substring(nextLine.indexOf("\t"),nextLine.indexOf("(")).trim();
+				}
+				
+				// checks if credit has other values
+				if (credit.equals(episodeNumber) || credit.equals(year) || credit.equals(role)
+						|| credit.equals(archiveFootage)) {
+					credit = "";
+				}
 				
 				actors.add(new Creator(name, title, year, episodeTitle, episodeNumber,
 						type,role, archiveFootage,credit , charName, billingOrder));
@@ -277,12 +245,12 @@ public class Creator extends Show implements Serializable{
 				
 				// if billingOrder is present
 				if (nextLine.contains("<")) {
-					billingOrder = nextLine.substring(nextLine.indexOf("<"), nextLine.indexOf(">"));
+					billingOrder = nextLine.substring(nextLine.indexOf("<"), nextLine.indexOf(">") + 1);
 				}
 				
 				// if charName is present
 				if (nextLine.contains("[")) {
-					charName = nextLine.substring(nextLine.indexOf("["), nextLine.indexOf("]"));
+					charName = nextLine.substring(nextLine.indexOf("["), nextLine.indexOf("]") + 1);
 				}
 				
 				// if type is present
@@ -297,20 +265,26 @@ public class Creator extends Show implements Serializable{
 					}
 				}
 				
+				// if episode number is only present
+				if (nextLine.contains("{(#")) {
+					episodeNumber = nextLine.substring(nextLine.indexOf("{"), nextLine.indexOf("}") + 1);
+				}
+				
 				// if episode information is present
 				if (nextLine.contains("{")) {
-					episodeTitle = nextLine.substring(nextLine.indexOf("{"), nextLine.indexOf("}"));
 					
-					// checks if episode number is in the episode title
+					// checks for "SUSPENDED"
+					if (nextLine.contains("{{")) {
+						episodeTitle = "SUSPENDED";
+						episodeNumber = "";
+					}
+					else {
+					episodeTitle = nextLine.substring(nextLine.indexOf("{") + 1, nextLine.indexOf("}"));
+					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("), episodeTitle.indexOf(")") + 1);
+					}
+					// if episodeNumber is part of episodeTitle
 					if (episodeTitle.contains("#")) {
-						
-					// gives episode number the correct value
-					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("),
-							episodeTitle.indexOf(")"));
-					// removes episode number value from episode title
-					// if episode number is only present, then assigns empty string to episodeTitle
-					episodeTitle = episodeTitle.substring(episodeTitle.indexOf("{"),
-							episodeTitle.indexOf("(") - 1);
+						episodeTitle = episodeTitle.substring(0, episodeTitle.indexOf("(")).trim();
 					}
 				}
 				
@@ -324,22 +298,42 @@ public class Creator extends Show implements Serializable{
 				if (episodeTitle.contains("-")) {
 					// if this is present, then assume there is no episode number and episodeTitle = episodeDate
 					episodeTitle = episodeTitle.substring(episodeTitle.indexOf("("),
-							episodeTitle.indexOf(")"));
+							episodeTitle.indexOf(")") + 1);
 					episodeNumber = "";
 				}
 				
 				// if role is present, if not role remains empty
-				if (nextLine.contains("(voice)")) {
+				if (nextLine.contains("voice")) {
 				role = "(voice)";
 				}
 				
 				// if credit is present, if not credit remains empty
-				if (nextLine.contains("(uncredited)")) {
+				if (nextLine.contains("uncredited")) {
 				credit = "(uncredited)";
 				}
 				
+				if (nextLine.contains("rumored")) {
+					credit = "(rumored)";
+				}
+				
+				// if archiveFootage is present, if not archiveFootage remains empty
+				if (nextLine.contains("archive footage")) {
+					archiveFootage = "(archive footage)";
+				}
+				
+				// reads in last occurance of parentheses
+				if (nextLine.contains("(as")) {
+					credit = nextLine.substring(nextLine.lastIndexOf("("), nextLine.lastIndexOf(")") + 1);
+				}
+				
 				// assigns title a value
-				title = nextLine.substring(nextLine.indexOf("\t"),nextLine.indexOf("(") + 1).trim();
+				title = nextLine.substring(nextLine.indexOf("\t"),nextLine.indexOf("(")).trim();
+				
+				// checks if credit has other values
+				if (credit.equals(episodeNumber) || credit.equals(year) || credit.equals(role)
+						|| credit.equals(archiveFootage)) {
+					credit = "";
+				}
 				
 				actors.add(new Creator(name, title, year, episodeTitle, episodeNumber,
 						type, role, archiveFootage, credit, charName, billingOrder));
@@ -349,15 +343,14 @@ public class Creator extends Show implements Serializable{
 			}
 			
 		}
-		creatorList.put("ACTING", actors);
 		return actors;
 	}
 	
 	/**
-	 * 
-	 * @param director
-	 * @param br
-	 * @return
+	 * Fills the director array with directors from a file.
+	 * @param director Director file to be read through.
+	 * @param br BufferedReader that reads the file.
+	 * @return Returns an ArrayList of directors to be used later.
 	 * @throws IOException
 	 */
 	public static ArrayList<Creator> fillDirectors (File director, BufferedReader br) throws IOException {
@@ -375,7 +368,7 @@ public class Creator extends Show implements Serializable{
 			nextLine = br.readLine();
 			
 			// year is always constant for each type of line being parsed
-			year = nextLine.substring(nextLine.indexOf("("), nextLine.indexOf(")"));
+			year = nextLine.substring(nextLine.indexOf("("), nextLine.indexOf(")") + 1);
 			if (nextLine.contains(",") && nextLine.contains("\t")) {
 				
 				// if type is present
@@ -390,20 +383,26 @@ public class Creator extends Show implements Serializable{
 					}
 				}
 				
+				// if episode number is only present
+				if (nextLine.contains("{(#")) {
+					episodeNumber = nextLine.substring(nextLine.indexOf("{"), nextLine.indexOf("}") + 1);
+				}
+				
 				// if episode information is present
 				if (nextLine.contains("{")) {
-					episodeTitle = nextLine.substring(nextLine.indexOf("{"), nextLine.indexOf("}"));
 					
-					// checks if episode number is in the episode title
+					// checks for "SUSPENDED"
+					if (nextLine.contains("{{")) {
+						episodeTitle = "SUSPENDED";
+						episodeNumber = "";
+					}
+					else {
+					episodeTitle = nextLine.substring(nextLine.indexOf("{") + 1, nextLine.indexOf("}"));
+					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("), episodeTitle.indexOf(")") + 1);
+					}
+					// if episodeNumber is part of episodeTitle
 					if (episodeTitle.contains("#")) {
-						
-					// gives episode number the correct value
-					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("),
-							episodeTitle.indexOf(")"));
-					// removes episode number value from episode title
-					// if episode number is only present, then assigns empty string to episodeTitle
-					episodeTitle = episodeTitle.substring(episodeTitle.indexOf("{"),
-							episodeTitle.indexOf("(") - 1);
+						episodeTitle = episodeTitle.substring(0, episodeTitle.indexOf("(")).trim();
 					}
 				}
 				
@@ -414,17 +413,27 @@ public class Creator extends Show implements Serializable{
 				}
 				
 				// assigns credit a value
-				credit = nextLine.substring(nextLine.lastIndexOf("("), nextLine.lastIndexOf(")"));
+				credit = nextLine.substring(nextLine.lastIndexOf("("), nextLine.lastIndexOf(")") + 1);
 				// checks if credit has the right information, if not then there is not credit to be given
 				if (credit.equals(year) || credit.equals(type)) {
 					credit = "";
 				}
 				
-				// assigns title a value
-				title = nextLine.substring(nextLine.indexOf("\t"),nextLine.indexOf("(") + 1).trim();
-				
 				// assigns name a value
-				name = nextLine.substring(nextLine.length(), nextLine.indexOf("\t")).trim();
+				name = nextLine.substring(0, nextLine.indexOf("\t")).trim();
+				
+				// if name has parentheses
+				if (name.contains("(")) {
+					title = nextLine.substring(nextLine.indexOf("\t"),
+							nextLine.indexOf("(", nextLine.indexOf("(") + 1)).trim();
+					// change year to appropiate value
+					year = nextLine.substring(nextLine.indexOf("(", nextLine.indexOf("(") + 1),
+							nextLine.indexOf(")", nextLine.indexOf(")") + 1 ) + 1).trim();
+				}
+				else {
+				// assigns title a value
+				title = nextLine.substring(nextLine.indexOf("\t"),nextLine.indexOf("(")).trim();
+				}
 				
 				directors.add(new Creator(name, title, year, episodeTitle, episodeNumber, type, credit));
 				
@@ -443,38 +452,39 @@ public class Creator extends Show implements Serializable{
 					}
 				}
 				
+				
+				// if episode number is only present
+				if (nextLine.contains("{(#")) {
+					episodeNumber = nextLine.substring(nextLine.indexOf("{"), nextLine.indexOf("}") + 1);
+				}
+				
 				// if episode information is present
 				if (nextLine.contains("{")) {
-					episodeTitle = nextLine.substring(nextLine.indexOf("{"), nextLine.indexOf("}"));
 					
-					// checks if episode number is in the episode title
+					// checks for "SUSPENDED"
+					if (nextLine.contains("{{")) {
+						episodeTitle = "SUSPENDED";
+						episodeNumber = "";
+					}
+					else {
+					episodeTitle = nextLine.substring(nextLine.indexOf("{") + 1, nextLine.indexOf("}"));
+					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("), episodeTitle.indexOf(")") + 1);
+					}
+					// if episodeNumber is part of episodeTitle
 					if (episodeTitle.contains("#")) {
-						
-					// gives episode number the correct value
-					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("),
-							episodeTitle.indexOf(")"));
-					// removes episode number value from episode title
-					// if episode number is only present, then assigns empty string to episodeTitle
-					episodeTitle = episodeTitle.substring(episodeTitle.indexOf("{"),
-							episodeTitle.indexOf("(") - 1);
+						episodeTitle = episodeTitle.substring(0, episodeTitle.indexOf("(")).trim();
 					}
 				}
 				
-				// if episode information is "SUSPENDED"
-				if (nextLine.contains("SUSPENDED")) {
-					episodeTitle = "SUSPENDED";
-					episodeNumber = "";
-				}
-				
 				// assigns credit a value
-				credit = nextLine.substring(nextLine.lastIndexOf("("), nextLine.lastIndexOf(")"));
+				credit = nextLine.substring(nextLine.lastIndexOf("("), nextLine.lastIndexOf(")") + 1);
 				// checks if credit has the right information, if not then there is not credit to be given
 				if (credit.equals(year) || credit.equals(type)) {
 					credit = "";
 				}
 				
 				// assigns title a value
-				title = nextLine.substring(nextLine.indexOf("\t"),nextLine.indexOf("(") + 1).trim();
+				title = nextLine.substring(nextLine.indexOf("\t"),nextLine.indexOf("(")).trim();
 				
 				directors.add(new Creator(name, title, year, episodeTitle, episodeNumber, type, credit));
 			}
@@ -482,15 +492,14 @@ public class Creator extends Show implements Serializable{
 				nextLine = br.readLine();
 			}
 		}
-		creatorList.put("DIRECTING", directors);
 		return directors;
 	}
 	
 	/**
-	 * 
-	 * @param producer
-	 * @param br
-	 * @return
+	 * Fills the producer array with producers from a file.
+	 * @param producer Producer file to be read through.
+	 * @param br BufferedReader that reads the file.
+	 * @return Returns an arraylist of producers to be used later.
 	 * @throws IOException
 	 */
 	public static ArrayList<Creator> fillProducers (File producer, BufferedReader br) throws IOException {
@@ -508,8 +517,8 @@ public class Creator extends Show implements Serializable{
 		if (br.ready()) {
 			nextLine = br.readLine();
 			
-			// year is always constant for each type of line being parsed
-			year = nextLine.substring(nextLine.indexOf("("), nextLine.indexOf(")"));
+			// year is mostly constant for each type of line being parsed, some exceptions
+			year = nextLine.substring(nextLine.indexOf("("), nextLine.indexOf(")") + 1);
 			
 if (nextLine.contains(",") && nextLine.contains("\t")) {
 				
@@ -525,20 +534,26 @@ if (nextLine.contains(",") && nextLine.contains("\t")) {
 					}
 				}
 				
+				// if episode number is only present
+				if (nextLine.contains("{(#")) {
+					episodeNumber = nextLine.substring(nextLine.indexOf("{"), nextLine.indexOf("}") + 1);
+				}
+				
 				// if episode information is present
 				if (nextLine.contains("{")) {
-					episodeTitle = nextLine.substring(nextLine.indexOf("{"), nextLine.indexOf("}"));
 					
-					// checks if episode number is in the episode title
+					// checks for "SUSPENDED"
+					if (nextLine.contains("{{")) {
+						episodeTitle = "SUSPENDED";
+						episodeNumber = "";
+					}
+					else {
+					episodeTitle = nextLine.substring(nextLine.indexOf("{") + 1, nextLine.indexOf("}"));
+					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("), episodeTitle.indexOf(")") + 1);
+					}
+					// if episodeNumber is part of episodeTitle
 					if (episodeTitle.contains("#")) {
-						
-					// gives episode number the correct value
-					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("),
-							episodeTitle.indexOf(")"));
-					// removes episode number value from episode title
-					// if episode number is only present, then assigns empty string to episodeTitle
-					episodeTitle = episodeTitle.substring(episodeTitle.indexOf("{"),
-							episodeTitle.indexOf("(") - 1);
+						episodeTitle = episodeTitle.substring(0, episodeTitle.indexOf("(")).trim();
 					}
 				}
 				
@@ -554,37 +569,47 @@ if (nextLine.contains(",") && nextLine.contains("\t")) {
 							
 							// Stores producer
 							if (nextLine.contains("(producer)")) {
-								role = "(producer)";
+								role = "producer";
 							}
 							
 							// Stores executive producer
 							if (nextLine.contains("(executive producer)")) {
-								role = "(executive producer)";
+								role = "executive producer";
 							}
 							
 							// Stores co-producer
 							if (nextLine.contains("(co-producer)")) {
-								role = "(co-producer)";
+								role = "co-producer";
 							}
 							
 							// Stores segment producer
 							if (nextLine.contains("(segment producer)")) {
-								role = "(segment producer)";
+								role = "segment producer";
 							}
 						}
 				
 				// assigns credit a value
-				credit = nextLine.substring(nextLine.lastIndexOf("("), nextLine.lastIndexOf(")"));
+				credit = nextLine.substring(nextLine.lastIndexOf("(") + 1, nextLine.lastIndexOf(")")). trim();
 				// checks if credit has the right information, if not then there is not credit to be given
 				if (credit.equals(year) || credit.equals(type) || credit.equals(role)) {
 					credit = "";
 				}
 				
-				// assigns title a value
-				title = nextLine.substring(nextLine.indexOf("\t"),nextLine.indexOf("(") + 1).trim();
-				
 				// assigns name a value
-				name = nextLine.substring(nextLine.length(), nextLine.indexOf("\t")).trim();
+				name = nextLine.substring(0, nextLine.indexOf("\t")).trim();
+				
+				// if name has parentheses
+				if (name.contains("(")) {
+					title = nextLine.substring(nextLine.indexOf("\t"),
+							nextLine.indexOf("(", nextLine.indexOf("(") + 1)).trim();
+					// change year to appropiate value
+					year = nextLine.substring(nextLine.indexOf("(", nextLine.indexOf("(") + 1),
+							nextLine.indexOf(")", nextLine.indexOf(")") + 1 ) + 1).trim();
+				}
+				else {
+				// assigns title a value
+				title = nextLine.substring(nextLine.indexOf("\t"),nextLine.indexOf("(")).trim();
+				}
 				
 				producers.add(new Creator(name, title, year, episodeTitle, episodeNumber, type, role, credit));
 				
@@ -603,20 +628,19 @@ if (nextLine.contains(",") && nextLine.contains("\t")) {
 					}
 				}
 				
+				// if episode number is only present
+				if (nextLine.contains("{(#")) {
+					episodeNumber = nextLine.substring(nextLine.indexOf("{"), nextLine.indexOf("}") + 1);
+				}
+				
 				// if episode information is present
 				if (nextLine.contains("{")) {
-					episodeTitle = nextLine.substring(nextLine.indexOf("{"), nextLine.indexOf("}"));
+					episodeTitle = nextLine.substring(nextLine.indexOf("{") + 1, nextLine.indexOf("}"));
+					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("), episodeTitle.indexOf(")") + 1);
 					
-					// checks if episode number is in the episode title
-					if (episodeTitle.contains("#")) {
-						
-					// gives episode number the correct value
-					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("),
-							episodeTitle.indexOf(")"));
-					// removes episode number value from episode title
-					// if episode number is only present, then assigns empty string to episodeTitle
-					episodeTitle = episodeTitle.substring(episodeTitle.indexOf("{"),
-							episodeTitle.indexOf("(") - 1);
+					// if episodeNumber is part of episodeTitle
+					if (episodeTitle.contains(episodeNumber)) {
+						episodeTitle = episodeTitle.substring(0, episodeTitle.indexOf("(")).trim();
 					}
 				}
 				
@@ -632,34 +656,34 @@ if (nextLine.contains(",") && nextLine.contains("\t")) {
 							
 							// Stores producer
 							if (nextLine.contains("(producer)")) {
-								role = "(producer)";
+								role = "producer";
 							}
 							
 							// Stores executive producer
 							if (nextLine.contains("(executive producer)")) {
-								role = "(executive producer)";
+								role = "executive producer";
 							}
 							
 							// Stores co-producer
 							if (nextLine.contains("(co-producer)")) {
-								role = "(co-producer)";
+								role = "co-producer";
 							}
 							
 							// Stores segment producer
 							if (nextLine.contains("(segment producer)")) {
-								role = "(segment producer)";
+								role = "segment producer";
 							}
 						}
 				
 				// assigns credit a value
-				credit = nextLine.substring(nextLine.lastIndexOf("("), nextLine.lastIndexOf(")"));
+				credit = nextLine.substring(nextLine.lastIndexOf("(") + 1, nextLine.lastIndexOf(")")). trim();
 				// checks if credit has the right information, if not then there is not credit to be given
 				if (credit.equals(year) || credit.equals(type) || credit.equals(role)) {
 					credit = "";
 				}
 				
 				// assigns title a value
-				title = nextLine.substring(nextLine.indexOf("\t"),nextLine.indexOf("(") + 1).trim();
+				title = nextLine.substring(nextLine.indexOf("\t"),nextLine.indexOf("(")).trim();
 				
 				producers.add(new Creator(name, title, year, episodeTitle, episodeNumber, type, role, credit));
 			}
@@ -667,66 +691,61 @@ if (nextLine.contains(",") && nextLine.contains("\t")) {
 				nextLine = br.readLine();
 			}
 		}
-		creatorList.put("PRODUCING", producers);
 		return producers;
 	}
-	
-	/**
-	 * Returns a string that represent the creators
-	 */
-	public String toString() {
-		return "";
+	public static int directorCredits() {
+		int directorCredits = 0;
+		
+		while(!directors.isEmpty()) {
+			for(int i = 0; i<directors.size(); ++i) {
+				String director = directors.get(i).toString();
+				while(director.contains("\t")){
+					int tabPlacement = director.indexOf("\t");
+					int newLinePlacement = director.indexOf("\n");
+					String oneCredit = director.substring(tabPlacement, newLinePlacement);
+					while(!oneCredit.isEmpty()){
+						directorCredits = directorCredits + 1;
+					}
+				}
+			}
+		} 
+		return directorCredits;
 	}
 	
-	public static final Comparator<Creator> TITLE_COMPARATOR = new Comparator<Creator>() {
-		@Override
-		public int compare(Creator o1, Creator o2) {
-			return o1.name.compareTo(o2.name); 
+	public static int producerCredits() {
+		int producerCredits = 0;
+		
+		while(!producers.isEmpty()){
+			for(int i = 0; i<producers.size(); ++i) {
+				String producer = producers.get(i).toString();
+				while(producer.contains("\t")){
+					int tabPlacement = producer.indexOf("\t");
+					int newLinePlacement = producer.indexOf("\n");
+					String oneCredit = producer.substring(tabPlacement, newLinePlacement);
+					while(!oneCredit.isEmpty()){
+						producerCredits = producerCredits + 1;
+					}
+				}
+			}
 		}
-	};
-	
-	// for testing purposes
-	public String getName() {
-		return name;
-	}
-	
-	public String getTitle() {
-		return title;
-	}
-	
-	public String getYear() {
-		return year;
-	}
-	
-	public String getType() {
-		return type;
-	}
-	
-	public String getArchiveFootage() {
-		return archiveFootage;
-	}
-	
-	public String getCharName() {
-		return charName;
-	}
-	
-	public String getBillingOrder() {
-		return billingOrder;
-	}
-	
-	public String getCredit() {
-		return credit;
-	}
-	
-	public String getRole() {
-		return role;
-	}
-	
-	public String getEpisodeTitle() {
-		return episodeTitle;
-	}
-	
-	public String getEpisodeNumber() {
-		return episodeNumber;
+		return producerCredits;
+		}
+		
+	public static int actorCredits() {
+		int actorCredits = 0;
+		while(!actors.isEmpty()){
+			for(int i = 0; i<actors.size(); ++i) {
+				String actor = actors.get(i).toString();
+				while(actor.contains("\t")){
+					int tabPlacement = actors.indexOf("\t");
+					int newLinePlacement = actors.indexOf("\n");
+					String oneCredit = actor.substring(tabPlacement, newLinePlacement);
+					while(!oneCredit.isEmpty()){
+						actorCredits = actorCredits + 1;
+					}
+				}
+			}
+		}
+		return actorCredits;
 	}
 }
