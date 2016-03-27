@@ -355,21 +355,4 @@ public class MovieDatabase implements Serializable{
 	{
 		return null;
 	}
-	
-	public static void writeDatabase(String filename, MovieDatabase database) throws IOException
-	{
-		FileOutputStream fileOutputStream = new FileOutputStream(filename);
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-		objectOutputStream.writeObject(database);
-		objectOutputStream.close();
-	}
-	
-	public static MovieDatabase readDatabase(String filename) throws IOException, ClassNotFoundException
-	{
-		FileInputStream fileInputStream = new FileInputStream(filename);
-		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-		MovieDatabase database = (MovieDatabase) objectInputStream.readObject();
-		objectInputStream.close();
-		return database;
-	}
 }

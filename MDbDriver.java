@@ -1,7 +1,11 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -161,7 +165,7 @@ public class MDbDriver implements Serializable{
 			{
 				System.out.println("Enter a file name to read in");
 				String inputFile = inputReader.readLine();
-				MovieDatabase.readDatabase(inputFile);
+				readDatabase(inputFile);
 				
 			}
 			
@@ -368,7 +372,7 @@ public class MDbDriver implements Serializable{
 	    			{
 	    				System.out.println("Enter a file to save to:");
 	    				String fileName = inputReader.readLine();
-	    				MovieDatabase.writeDatabase(fileName, mDb);
+	    				writeDatabase(fileName, mDb);
 	    			}
 			    	
 			    } else if (yn.equalsIgnoreCase("n")){
@@ -384,5 +388,22 @@ public class MDbDriver implements Serializable{
 			e.printStackTrace();
 		}
 	        
+	}
+	
+	public static void writeDatabase(String filename, MovieDatabase database) throws IOException
+	{
+		FileOutputStream fileOutputStream = new FileOutputStream(filename);
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+		objectOutputStream.writeObject(database);
+		objectOutputStream.close();
+	}
+	
+	public static MovieDatabase readDatabase(String filename) throws IOException, ClassNotFoundException
+	{
+		FileInputStream fileInputStream = new FileInputStream(filename);
+		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+		MovieDatabase database = (MovieDatabase) objectInputStream.readObject();
+		objectInputStream.close();
+		return database;
 	}
 }
