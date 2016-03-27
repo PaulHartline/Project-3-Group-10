@@ -15,8 +15,7 @@ import java.util.LinkedHashMap;
  */
 public class Creator extends Show implements Serializable{
 
-	
-	private static final long serialVersionUID = 1L;
+	static final long serialVersionUID = 1L;
 	
 	/** List that stores information about actors  */
 	public static ArrayList<Creator> actors = new ArrayList<Creator>();
