@@ -196,6 +196,8 @@ public class MovieDatabase implements Serializable{
 		
 		ArrayList<Creator> creators = new ArrayList<Creator>();
 		
+			if (!exactMatch)
+			{
 				if (actor)
 				{
 					for (Creator creator : Creator.actors)
@@ -203,8 +205,6 @@ public class MovieDatabase implements Serializable{
 						if (creator.getName().toLowerCase().matches(".*" + name.toLowerCase() + ".*"))
 						{
 							creators.add(creator);
-							if (exactMatch) 
-								return creators;
 						}
 					}
 				}
@@ -216,24 +216,56 @@ public class MovieDatabase implements Serializable{
 						if (creator.getName().toLowerCase().matches(".*" + name.toLowerCase() + ".*"))
 						{
 							creators.add(creator);
-							if (exactMatch) 
-								return creators;
 						}
 					}
 				}
 				
 				else if (producer)
 				{
-					for (Creator creator : Creator.actors)
+					for (Creator creator : Creator.producers)
 					{
 						if (creator.getName().toLowerCase().matches(".*" + name.toLowerCase() + ".*"))
 						{
 							creators.add(creator);
-							if (exactMatch) 
-								return creators;
 						}
 					}
 				}
+			}
+			else
+			{
+				if (actor)
+				{
+					for (Creator creator : Creator.actors)
+					{
+						if (creator.getName().toLowerCase().matches(name.toLowerCase()))
+						{
+							creators.add(creator);
+						}
+					}
+				}
+				
+				else if (director)
+				{
+					for (Creator creator : Creator.directors)
+					{
+						if (creator.getName().toLowerCase().matches(name.toLowerCase()))
+						{
+							creators.add(creator);
+						}
+					}
+				}
+				
+				else if (producer)
+				{
+					for (Creator creator : Creator.producers)
+					{
+						if (creator.getName().toLowerCase().matches(name.toLowerCase()))
+						{
+							creators.add(creator);
+						}
+					}
+				}
+			}
 		Collections.sort(creators, Creator.TITLE_COMPARATOR);
 		return creators;
 	}
