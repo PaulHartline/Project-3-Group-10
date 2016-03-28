@@ -113,7 +113,14 @@ public class MDbDriver implements Serializable{
 					actors = new File(actorFile);
 					ArrayList<Creator> actorList = new ArrayList<Creator>();
 					actorList = Creator.fillActors(actors, inputReader);
-					creatorList.put("ACTING", actorList);
+					for (int i = 0; i < actorList.size(); ++i) {
+						if (!actorList.get(i).getName().equals("") && 
+								!actorList.get(i).getName().equals(actorList.get(i - 1).getName())) {
+							creatorList.put(actorList.get(i).getName(), new ArrayList<Creator>
+									(actorList.subList(actorList.get(i).getName().indexOf(actorList.get(i).getName()),
+											actorList.get(i).getName().indexOf(actorList.get(i - 1).getName()))));
+						}
+					}
 				}
 				System.out.println("What is the Director file?");
 				String directorFile = inputReader.readLine();
@@ -140,7 +147,14 @@ public class MDbDriver implements Serializable{
 					directors = new File(directorFile);
 					ArrayList<Creator> directorList = new ArrayList<Creator>();
 					directorList = Creator.fillDirectors(directors, inputReader);
-					creatorList.put("DIRECTING", directorList);
+					for (int i = 0; i < directorList.size(); ++i) {
+						if (!directorList.get(i).getName().equals("") && 
+								!directorList.get(i).getName().equals(directorList.get(i - 1).getName())) {
+							creatorList.put(directorList.get(i).getName(), new ArrayList<Creator>
+									(directorList.subList(directorList.get(i).getName().indexOf(directorList.get(i).getName()),
+											directorList.get(i).getName().indexOf(directorList.get(i - 1).getName()))));
+						}
+					}
 				}
 				System.out.println("What is the Producer file?");
 				String producerFile = inputReader.readLine();
@@ -167,7 +181,14 @@ public class MDbDriver implements Serializable{
 					producers = new File(producerFile);
 					ArrayList<Creator> producerList = new ArrayList<Creator>();
 					producerList = Creator.fillProducers(producers, inputReader);
-					creatorList.put("PRODUCING", producerList);
+					for (int i = 0; i < producerList.size(); ++i) {
+						if (!producerList.get(i).getName().equals("") && 
+								!producerList.get(i).getName().equals(producerList.get(i - 1).getName())) {
+							creatorList.put(producerList.get(i).getName(), new ArrayList<Creator>
+									(producerList.subList(producerList.get(i).getName().indexOf(producerList.get(i).getName()),
+											producerList.get(i).getName().indexOf(producerList.get(i - 1).getName()))));
+						}
+					}
 				}
 				mDb = new MovieDatabase(movieFile, TVFile, actorFile, directorFile, producerFile);
 			
