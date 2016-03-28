@@ -729,17 +729,35 @@ if (nextLine.contains(",") && nextLine.contains("\t")) {
 		}
 		
 	public void actorCredits(BufferedReader br) throws IOException {
-		while(br.ready()){
-			String nextLine = br.readLine();
-			int lastTab = nextLine.lastIndexOf("/t");
-			String credit = nextLine.substring(lastTab);
-			if(credit.contains("{")){
+	while(br.ready()){
+		String nextLine = br.readLine();
+		int lastTab = nextLine.lastIndexOf("/t");
+		String credit = nextLine.substring(lastTab);
+		if(credit.contains("{")){
 			sActingCredit = sActingCredit + 1;
-			}
-			else{
+		}
+		else{
 			mActingCredit = mActingCredit +1;
-			}
+		}
 		
-		}	
+	}
+	}
+	public static double getSAC(){
+		return (double)sActingCredit;
+	}
+	public static double getMAC(){
+		return (double)mActingCredit;
+	}
+	public static double getSDC(){
+		return (double)sDirectingCredit;
+	}
+	public static double getMDC(){
+		return (double)mDirectingCredit;
+	}
+	public static double getSPC(){
+		return (double)sProducingCredit;
+	}
+	public static double getMPC(){
+		return (double)mProducingCredit;
 	}
 }
