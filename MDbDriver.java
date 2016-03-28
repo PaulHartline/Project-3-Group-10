@@ -117,10 +117,11 @@ public class MDbDriver implements Serializable{
 					{
 						counter = 0;
 					}
-					actors = new File(actorFile);
-					actorList = Creator.fillActors(actors);
 				}
-				for (int i = 0; i < actorList.size(); ++i) {
+				actors = new File(actorFile);
+				actorList = Creator.fillActors(actors);
+				System.out.println("ActorList" + actorList.size());
+				for (int i = 1; i < actorList.size(); ++i) {
 					if (!actorList.get(i).getName().equals("") && 
 							!actorList.get(i).getName().equals(actorList.get(i - 1).getName())) {
 						actorMap.put(actorList.get(i).getName(), new ArrayList<Creator>
@@ -153,7 +154,7 @@ public class MDbDriver implements Serializable{
 					directors = new File(directorFile);
 				}
 				directorList = Creator.fillDirectors(directors);
-				for (int i = 0; i < directorList.size(); ++i) {
+				for (int i = 1; i < directorList.size(); ++i) {
 					if (!directorList.get(i).getName().equals("") && 
 							!directorList.get(i).getName().equals(directorList.get(i - 1).getName())) {
 						directorMap.put(directorList.get(i).getName(), new ArrayList<Creator>
@@ -186,7 +187,7 @@ public class MDbDriver implements Serializable{
 					producers = new File(producerFile);
 				}
 				producerList = Creator.fillProducers(producers);
-				for (int i = 0; i < producerList.size(); ++i) {
+				for (int i = 1; i < producerList.size(); ++i) {
 					if (!producerList.get(i).getName().equals("") && 
 							!producerList.get(i).getName().equals(producerList.get(i - 1).getName())) {
 						producerMap.put(producerList.get(i).getName(), new ArrayList<Creator>

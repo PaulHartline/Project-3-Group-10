@@ -148,12 +148,13 @@ public class Creator extends Show {
 		String billingOrder = "";
 		
 		// stops reader if the file is out of bounds
-		if (br.ready()) {
+		while (br.ready()) {
 			// reads in a line from the file
 			nextLine = br.readLine();
 			
 			// year is always constant for each type of line being parsed
-			year = nextLine.substring(nextLine.indexOf("("), nextLine.indexOf(")") + 1);
+			if (nextLine.indexOf(")") + 1 > -1 && nextLine.indexOf("(") > -1)
+				year = nextLine.substring(nextLine.indexOf("("), nextLine.indexOf(")") + 1);
 			
 			// aquires line that has the actor's name present and is followed by a tab
 			if (nextLine.contains(",") && nextLine.contains("\t")) {
@@ -231,8 +232,8 @@ public class Creator extends Show {
 				name = nextLine.substring(0, nextLine.indexOf("\t")).trim();
 				
 				String[] nameArray = name.split(",");
-				
-				name = nameArray[1].trim()+ " " + nameArray[0].trim();
+				if (nameArray.length > 1)
+					name = nameArray[1].trim()+ " " + nameArray[0].trim();
 				
 				// if name has parentheses
 				if (name.contains("(")) {
