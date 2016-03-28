@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 
 /**
  * Project #2
@@ -20,7 +21,9 @@ public class MovieDatabase implements Serializable{
 	
 	/**List containing all the movies and TV shows*/
 	private ArrayList<Show> mDb = new ArrayList<Show>();
-	private ArrayList<Creator> cDb = new ArrayList<Creator>();
+	private LinkedHashMap<String, ArrayList<Creator>> actors = new LinkedHashMap<String, ArrayList<Creator>>();
+	private LinkedHashMap<String, ArrayList<Creator>> directors = new LinkedHashMap<String, ArrayList<Creator>>();
+	private LinkedHashMap<String, ArrayList<Creator>> producers = new LinkedHashMap<String, ArrayList<Creator>>();
 	
 	public MovieDatabase()
 	{
@@ -32,13 +35,10 @@ public class MovieDatabase implements Serializable{
 	 * @param moviesFile Name of file containing movies
 	 * @param TVFile Name of file containing TV shows
 	 */
-	public MovieDatabase(String moviesFile, String TVFile, String actorFile, String directorFile, String producerFile) {
+	public MovieDatabase(String moviesFile, String TVFile) {
 		try {
 			mDb.addAll(readShowsIntoDB(moviesFile, true));
 			mDb.addAll(readShowsIntoDB(TVFile, false));
-			cDb.addAll(readCreatorsIntoDB(actorFile, true, false));
-			cDb.addAll(readCreatorsIntoDB(directorFile, false, true));
-			cDb.addAll(readCreatorsIntoDB(producerFile, false, false));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -83,51 +83,6 @@ public class MovieDatabase implements Serializable{
 			fr.close();
 			series.addAll(episodes);
 			return series;
-		}
-	}
-	
-	/**Takes file of movies, parses them, and add them to database
-	 * 
-	 * @param file Name of File containing shows
-	 * @param isMovie true if file contains movies, false if file containing TV
-	 * @throws FileNotFoundException 
-	 */
-	private ArrayList<Creator> readCreatorsIntoDB(String file, boolean isActor, boolean isDirector) throws IOException {
-		FileReader fr = new FileReader(file);
-		BufferedReader br = new BufferedReader(fr);
-	
-		if (isActor) {
-			ArrayList<Creator> actors = new ArrayList<Creator>();
-			
-			String line = br.readLine();
-			while (line != null) {
-				actors.add(parseActor(line));
-				line = br.readLine();
-			}
-			br.close();
-			fr.close();
-			return actors;
-		} else if (isDirector) {
-			ArrayList<Creator> directors = new ArrayList<Creator>();
-			String line = br.readLine();
-			while (line != null) {
-				directors.add(parseDirector(line));
-				line = br.readLine();
-			}
-			br.close();
-			fr.close();
-			return directors;
-		}
-		else {
-			ArrayList<Creator> producers = new ArrayList<Creator>();
-			String line = br.readLine();
-			while (line != null) {
-				producers.add(parseProducer(line));
-				line = br.readLine();
-			}
-			br.close();
-			fr.close();
-			return producers;
 		}
 	}
 	
@@ -369,18 +324,26 @@ public class MovieDatabase implements Serializable{
 		
 		return new Episode(name, year, episodeNumber, series);
 	}
-	private Creator parseActor(String line)
+	
+	public void putHashMapIntoDB(LinkedHashMap<String, ArrayList<Creator>> actors, LinkedHashMap<String, ArrayList<Creator>> directors, LinkedHashMap<String, ArrayList<Creator>> producers)
 	{
-		return null;
+		this.actors = actors;
+		this.directors = directors;
+		this.producers = producers;
 	}
 	
-	private Creator parseDirector(String line)
+	public LinkedHashMap<String, ArrayList<Creator>> getActorMap()
 	{
-		return null;
+		return actors;
 	}
 	
-	private Creator parseProducer(String line)
+	public LinkedHashMap<String, ArrayList<Creator>> getDirectorMap()
 	{
-		return null;
+		return directors;
+	}
+	
+	public LinkedHashMap<String, ArrayList<Creator>> getProducerMap()
+	{
+		return producers;
 	}
 }

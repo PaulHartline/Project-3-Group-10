@@ -14,6 +14,10 @@ import java.util.ArrayList;
 public class Creator extends Show {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** List that stores information about actors  */
 	public static ArrayList<Creator> actors = new ArrayList<Creator>();
 	/** List that stores information about directors */

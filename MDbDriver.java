@@ -192,8 +192,8 @@ public class MDbDriver implements Serializable{
 						}
 					}
 				}
-				mDb = new MovieDatabase(movieFile, TVFile, actorFile, directorFile, producerFile);
-			
+				mDb = new MovieDatabase(movieFile, TVFile);
+				mDb.putHashMapIntoDB(actorMap, directorMap, producerMap);
 			}
 			else
 			{
@@ -338,18 +338,6 @@ public class MDbDriver implements Serializable{
 					}
 					System.out.println("Enter the name of the person you want to search for");
 					String personName = inputReader.readLine();
-					if (exactPartial.equalsIgnoreCase("e"))
-					{
-						ArrayList<Creator> actors = mDb.searchFiles(true, false, false, true, personName);
-						ArrayList<Creator> directors = mDb.searchFiles(false, true, false, true, personName);
-						ArrayList<Creator> producers = mDb.searchFiles(false, false, true, true, personName);
-					}
-					else
-					{
-						ArrayList<Creator> actors = mDb.searchFiles(true, false, false, false, personName);
-						ArrayList<Creator> directors = mDb.searchFiles(false, true, false, false, personName);
-						ArrayList<Creator> producers = mDb.searchFiles(false, false, true, false, personName);
-					}
 					
 					System.out.println("Display (t)ext or (g)raph?");
 					String ToG = inputReader.readLine();
@@ -365,26 +353,33 @@ public class MDbDriver implements Serializable{
 						if (exactPartial.equalsIgnoreCase("e")) System.out.println("EXACT NAME: " + personName);
 						if (exactPartial.equalsIgnoreCase("p")) System.out.println("PARTIAL NAME: " + personName);
 						System.out.println("================================================================================");
-						for (int i = 0; i < actorList.size(); ++i) {
-						if (actorMap.containsKey(personName)) {
-							System.out.println(personName);
-							System.out.println("ACTING");
-							actorMap.get(personName).toString();
+						if (exactPartial.equalsIgnoreCase("e"))
+							{
+							for (int i = 0; i < actorList.size(); ++i) {
+							if (mDb.getActorMap().containsKey(personName)) {
+								System.out.println(personName);
+								System.out.println("ACTING");
+								mDb.getActorMap().get(personName).toString();
+							}
+							}
+							for (int b = 0; b < directorList.size(); ++b) {
+							if (mDb.getDirectorMap().containsKey(personName)) {
+								System.out.println(personName);
+								System.out.println("DIRECTING");
+								mDb.getDirectorMap().get(personName).toString();
+							}
+							}
+							for (int a = 0; a < producerList.size(); ++a) {
+							if (mDb.getProducerMap().containsKey(personName)) {
+								System.out.println(personName);
+								System.out.println("PRODUCING");
+								mDb.getProducerMap().get(personName).toString();
+							}
+							}
 						}
-						}
-						for (int b = 0; b < directorList.size(); ++b) {
-						if (directorMap.containsKey(personName)) {
-							System.out.println(personName);
-							System.out.println("DIRECTING");
-							directorMap.get(personName).toString();
-						}
-						}
-						for (int a = 0; a < producerList.size(); ++a) {
-						if (producerMap.containsKey(personName)) {
-							System.out.println(personName);
-							System.out.println("PRODUCING");
-							producerMap.get(personName).toString();
-						}
+						else
+						{
+							//Code for partial matches
 						}
 					}
 					else
