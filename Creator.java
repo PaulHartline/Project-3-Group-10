@@ -756,4 +756,80 @@ if (nextLine.contains(",") && nextLine.contains("\t")) {
 		}
 		return actorCredits;
 	}
+		/**
+	 * @return the name of a creator
+	 */
+	public String getName() {
+		return name;
+	}
+	
+	/**
+	 * @return The title of a movie
+	 */
+	public String getTitle() {
+		return title;
+	}
+	
+	/**
+	 * @return Year the movie was released
+	 */
+	public String getYear() {
+		return year;
+	}
+	
+	/**
+	 * @return The type of movie (TV or V)
+	 */
+	public String getType() {
+		return type;
+	}
+	
+	/**
+	 * @return the archive footage of the movie
+	 */
+	public String getArchiveFootage() {
+		return archiveFootage;
+	}
+	
+	/**
+	 * @return The character name of the creator
+	 */
+	public String getCharName() {
+		return charName;
+	}
+	
+	/**
+	 * @return the creator's paycheck
+	 */
+	public String getBillingOrder() {
+		return billingOrder;
+	}
+	
+	/**
+	 * @return creator's credit
+	 */
+	public String getCredit() {
+		return credit;
+	}
+	
+	/**
+	 * @return the role the creator played in the movie production
+	 */
+	public String getRole() {
+		return role;
+	}
+	
+	/**
+	 * @return The title of an episode
+	 */
+	public String getEpisodeTitle() {
+		return episodeTitle;
+	}
+	
+	/**
+	 * @return The season number and episode number of an episode
+	 */
+	public String getEpisodeNumber() {
+		return episodeNumber;
+	}
 }
