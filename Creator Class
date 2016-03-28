@@ -42,7 +42,12 @@ public class Creator extends Show {
 	private String credit;
 	/** The role the creator had in the production */
 	private String role;
-	
+	private int mActingCredit = 0;
+	private int sActingCredit = 0;
+	private int mProducingCredit = 0;
+	private int sProducingCredit = 0;
+	private int mDirectingCredit = 0;
+	private int sDirectingCredit = 0;
 	/**
 	 * Constructor for Creator: actor
 	 * @param name The name of the creator
@@ -693,59 +698,48 @@ if (nextLine.contains(",") && nextLine.contains("\t")) {
 		}
 		return producers;
 	}
-	public static int directorCredits() {
-		int directorCredits = 0;
-		
-		while(!directors.isEmpty()) {
-			for(int i = 0; i<directors.size(); ++i) {
-				String director = directors.get(i).toString();
-				while(director.contains("\t")){
-					int tabPlacement = director.indexOf("\t");
-					int newLinePlacement = director.indexOf("\n");
-					String oneCredit = director.substring(tabPlacement, newLinePlacement);
-					while(!oneCredit.isEmpty()){
-						directorCredits = directorCredits + 1;
-					}
-				}
+	public void directorCredits(BufferedReader br) throws IOException {
+		while(br.ready()){
+			String nextLine = br.readLine();
+			int lastTab = nextLine.lastIndexOf("/t");
+			String credit = nextLine.substring(lastTab);
+			if(credit.contains("{")){
+				sDirectingCredit = sDirectingCredit + 1;
 			}
-		} 
-		return directorCredits;
+			else{
+				mDirectingCredit = mDirectingCredit +1;
+			}
+			
+		}
 	}
 	
-	public static int producerCredits() {
-		int producerCredits = 0;
-		
-		while(!producers.isEmpty()){
-			for(int i = 0; i<producers.size(); ++i) {
-				String producer = producers.get(i).toString();
-				while(producer.contains("\t")){
-					int tabPlacement = producer.indexOf("\t");
-					int newLinePlacement = producer.indexOf("\n");
-					String oneCredit = producer.substring(tabPlacement, newLinePlacement);
-					while(!oneCredit.isEmpty()){
-						producerCredits = producerCredits + 1;
-					}
-				}
+	public void producerCredits(BufferedReader br) throws IOException {
+		while(br.ready()){
+			String nextLine = br.readLine();
+			int lastTab = nextLine.lastIndexOf("/t");
+			String credit = nextLine.substring(lastTab);
+			if(credit.contains("{")){
+				sProducingCredit = sProducingCredit + 1;
 			}
+			else{
+				mProducingCredit = mProducingCredit +1;
+			}
+			
 		}
-		return producerCredits;
 		}
 		
-	public static int actorCredits() {
-		int actorCredits = 0;
-		while(!actors.isEmpty()){
-			for(int i = 0; i<actors.size(); ++i) {
-				String actor = actors.get(i).toString();
-				while(actor.contains("\t")){
-					int tabPlacement = actors.indexOf("\t");
-					int newLinePlacement = actors.indexOf("\n");
-					String oneCredit = actor.substring(tabPlacement, newLinePlacement);
-					while(!oneCredit.isEmpty()){
-						actorCredits = actorCredits + 1;
-					}
-				}
+	public void actorCredits(BufferedReader br) throws IOException {
+		while(br.ready()){
+			String nextLine = br.readLine();
+			int lastTab = nextLine.lastIndexOf("/t");
+			String credit = nextLine.substring(lastTab);
+			if(credit.contains("{")){
+			sActingCredit = sActingCredit + 1;
 			}
-		}
-		return actorCredits;
+			else{
+			mActingCredit = mActingCredit +1;
+			}
+		
+		}	
 	}
 }
