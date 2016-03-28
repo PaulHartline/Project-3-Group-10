@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  * Project #2
@@ -28,8 +29,9 @@ public class MDbDriver implements Serializable{
 	 */
 	public static void main(String[] args) throws ClassNotFoundException {
 		BufferedReader inputReader= new BufferedReader(new InputStreamReader(System.in));
+		LinkedHashMap<String, ArrayList<Creator>> creatorList = new LinkedHashMap<String, ArrayList<Creator>>();
 		try {
-			System.out.println("Read (t)ext or (b)inary data?Åh");
+			System.out.println("Read (t)ext or (b)inary data?¬Åh");
 			String textOrBinary = inputReader.readLine();
 			MovieDatabase mDb = new MovieDatabase();
 			
@@ -109,6 +111,9 @@ public class MDbDriver implements Serializable{
 						counter = 0;
 					}
 					actors = new File(actorFile);
+					ArrayList<Creator> actorList = new ArrayList<Creator>();
+					actorList = Creator.fillActors(actors, inputReader);
+					creatorList.put("ACTING", actorList);
 				}
 				System.out.println("What is the Director file?");
 				String directorFile = inputReader.readLine();
@@ -133,6 +138,9 @@ public class MDbDriver implements Serializable{
 						counter = 0;
 					}
 					directors = new File(directorFile);
+					ArrayList<Creator> directorList = new ArrayList<Creator>();
+					directorList = Creator.fillDirectors(directors, inputReader);
+					creatorList.put("DIRECTING", directorList);
 				}
 				System.out.println("What is the Producer file?");
 				String producerFile = inputReader.readLine();
@@ -157,6 +165,9 @@ public class MDbDriver implements Serializable{
 						counter = 0;
 					}
 					producers = new File(producerFile);
+					ArrayList<Creator> producerList = new ArrayList<Creator>();
+					producerList = Creator.fillProducers(producers, inputReader);
+					creatorList.put("PRODUCING", producerList);
 				}
 				mDb = new MovieDatabase(movieFile, TVFile, actorFile, directorFile, producerFile);
 			
