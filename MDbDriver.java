@@ -1,3 +1,7 @@
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,8 +14,8 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+
+import javax.swing.JFrame;
 
 /**
  * Project #2
@@ -118,14 +122,14 @@ public class MDbDriver implements Serializable{
 						counter = 0;
 					}
 					actors = new File(actorFile);
-					actorList = Creator.fillActors(actors);
-				}
-				for (int i = 0; i < actorList.size(); ++i) {
-					if (!actorList.get(i).getName().equals("") && 
-							!actorList.get(i).getName().equals(actorList.get(i - 1).getName())) {
-						actorMap.put(actorList.get(i).getName(), new ArrayList<Creator>
-								(actorList.subList(actorList.get(i).getName().indexOf(actorList.get(i).getName()),
-										actorList.get(i).getName().indexOf(actorList.get(i - 1).getName()))));
+					actorList = Creator.fillActors(actors, inputReader);
+					for (int i = 0; i < actorList.size(); ++i) {
+						if (!actorList.get(i).getName().equals("") && 
+								!actorList.get(i).getName().equals(actorList.get(i - 1).getName())) {
+							actorMap.put(actorList.get(i).getName(), new ArrayList<Creator>
+									(actorList.subList(actorList.get(i).getName().indexOf(actorList.get(i).getName()),
+											actorList.get(i).getName().indexOf(actorList.get(i - 1).getName()))));
+						}
 					}
 				}
 				System.out.println("What is the Director file?");
@@ -151,14 +155,14 @@ public class MDbDriver implements Serializable{
 						counter = 0;
 					}
 					directors = new File(directorFile);
-				}
-				directorList = Creator.fillDirectors(directors);
-				for (int i = 0; i < directorList.size(); ++i) {
-					if (!directorList.get(i).getName().equals("") && 
-							!directorList.get(i).getName().equals(directorList.get(i - 1).getName())) {
-						directorMap.put(directorList.get(i).getName(), new ArrayList<Creator>
-								(directorList.subList(directorList.get(i).getName().indexOf(directorList.get(i).getName()),
-										directorList.get(i).getName().indexOf(directorList.get(i - 1).getName()))));
+					directorList = Creator.fillDirectors(directors, inputReader);
+					for (int i = 0; i < directorList.size(); ++i) {
+						if (!directorList.get(i).getName().equals("") && 
+								!directorList.get(i).getName().equals(directorList.get(i - 1).getName())) {
+							directorMap.put(directorList.get(i).getName(), new ArrayList<Creator>
+									(directorList.subList(directorList.get(i).getName().indexOf(directorList.get(i).getName()),
+											directorList.get(i).getName().indexOf(directorList.get(i - 1).getName()))));
+						}
 					}
 				}
 				System.out.println("What is the Producer file?");
@@ -184,17 +188,16 @@ public class MDbDriver implements Serializable{
 						counter = 0;
 					}
 					producers = new File(producerFile);
-				}
-				producerList = Creator.fillProducers(producers);
-				for (int i = 0; i < producerList.size(); ++i) {
-					if (!producerList.get(i).getName().equals("") && 
-							!producerList.get(i).getName().equals(producerList.get(i - 1).getName())) {
-						producerMap.put(producerList.get(i).getName(), new ArrayList<Creator>
-								(producerList.subList(producerList.get(i).getName().indexOf(producerList.get(i).getName()),
-										producerList.get(i).getName().indexOf(producerList.get(i - 1).getName()))));
+					producerList = Creator.fillProducers(producers, inputReader);
+					for (int i = 0; i < producerList.size(); ++i) {
+						if (!producerList.get(i).getName().equals("") && 
+								!producerList.get(i).getName().equals(producerList.get(i - 1).getName())) {
+							producerMap.put(producerList.get(i).getName(), new ArrayList<Creator>
+									(producerList.subList(producerList.get(i).getName().indexOf(producerList.get(i).getName()),
+											producerList.get(i).getName().indexOf(producerList.get(i - 1).getName()))));
+						}
 					}
 				}
-				
 				mDb = new MovieDatabase(movieFile, TVFile);
 				mDb.putHashMapIntoDB(actorMap, directorMap, producerMap);
 			}
@@ -358,89 +361,60 @@ public class MDbDriver implements Serializable{
 						System.out.println("================================================================================");
 						if (exactPartial.equalsIgnoreCase("e"))
 							{
-							
-							creatorResults = actorMap.get(personName);
-							for (Creator c : creatorResults)
-							{
-								if (c.getName().equals(personName))
-								{
-									System.out.println(c.getName());
-									System.out.println("ACTING");
-									mDb.getActorMap().get(c.getName()).toString();
-								}
+							for (int i = 0; i < actorList.size(); ++i) {
+							if (mDb.getActorMap().containsKey(personName)) {
+								System.out.println(personName);
+								System.out.println("ACTING");
+								mDb.getActorMap().get(personName).toString();
 							}
-							
-							for (Map.Entry<String, ArrayList<Creator>> entry : mDb.getActorMap().entrySet()) {
-								creatorResults = entry.getValue();
-								for (Creator c : creatorResults)
-								{
-									if (c.getName().equals(personName))
-									{
-										System.out.println(c.getName());
-										System.out.println("ACTING");
-										mDb.getActorMap().get(c.getName()).toString();
-									}
-								}
 							}
-							for (Map.Entry<String, ArrayList<Creator>> map: mDb.getDirectorMap().entrySet()) {
-								String key = map.getKey();
-								creatorResults = map.getValue();
-								if (key.equals(personName)) {
-								System.out.println(key);
+							for (int b = 0; b < directorList.size(); ++b) {
+							if (mDb.getDirectorMap().containsKey(personName)) {
+								System.out.println(personName);
 								System.out.println("DIRECTING");
-								mDb.getDirectorMap().get(key).toString();
-								}
+								mDb.getDirectorMap().get(personName).toString();
 							}
-							for (Map.Entry<String, ArrayList<Creator>> map: mDb.getProducerMap().entrySet()) {
-								String key = map.getKey();
-								creatorResults = map.getValue();
-								if (key.equals(personName)) {
-								System.out.println(key);
+							}
+							for (int a = 0; a < producerList.size(); ++a) {
+							if (mDb.getProducerMap().containsKey(personName)) {
+								System.out.println(personName);
 								System.out.println("PRODUCING");
-								mDb.getProducerMap().get(key).toString();
-								}
+								mDb.getProducerMap().get(personName).toString();
+							}
 							}
 						}
 						else
 						{
 							//Code for partial matches
-							for (Map.Entry<String, ArrayList<Creator>> entry : mDb.getActorMap().entrySet()) {
-							    String key = entry.getKey();
-								creatorResults = entry.getValue();
-								System.out.println("BLAH");
-								for (Creator c : creatorResults)
-								{
-									if (c.getName().contains(personName))
-									{
-										System.out.println(c.getName());
-										System.out.println("ACTING");
-										mDb.getActorMap().get(c.getName()).toString();
-									}
-								}
-								}
-						for (Map.Entry<String, ArrayList<Creator>> map: mDb.getDirectorMap().entrySet()) {
-							String key = map.getKey();
-							creatorResults = map.getValue();
-							if (key.contains(personName)) {
-							System.out.println(key);
-							System.out.println("DIRECTING");
-							mDb.getDirectorMap().get(key).toString();
-							}
-						}
-						for (Map.Entry<String, ArrayList<Creator>> map: mDb.getProducerMap().entrySet()) {
-							String key = map.getKey();
-							creatorResults = map.getValue();
-							System.out.println(key);
-							if (key.contains(personName)) {
-							System.out.println("PRODUCING");
-							mDb.getProducerMap().get(key).toString();
-							}
-						}
 						}
 					}
 					else
 					{
-						//output in graph format
+						System.out.println("Display data in a (P)ie Chart or (H)istogram?");
+						String PoH = inputReader.readLine();
+						while (!PoH.equalsIgnoreCase("p") && !PoH.equalsIgnoreCase("h")) {
+							System.out.println("Sorry, not valid input. Try again");
+						}
+						if (PoH.equalsIgnoreCase("p")) {
+							Slice[] slices = { new Slice(Creator.getMPC(), Color.black), new Slice(Creator.getSPC(), Color.green),
+						 		      new Slice(Creator.getSAC(), Color.yellow), new Slice(Creator.getMAC(), Color.red), 
+						 		      new Slice(Creator.getSDC(), Color.blue), new Slice(Creator.getMDC(), Color.pink)};
+							JFrame frame = new JFrame();
+						      frame.getContentPane().add(new MyPieChart());
+						      frame.setSize(500, 500);
+						      frame.setVisible(true);
+						}
+						else {
+							if (mDb.getActorMap().containsKey(personName)) {
+								MyHistogram histogram = new MyHistogram(mDb.getActorMap(), Creator.getMAC() + Creator.getSAC());
+							}
+							if (mDb.getDirectorMap().containsKey(personName)) {
+								MyHistogram histogram = new MyHistogram(mDb.getDirectorMap(), Creator.getMDC() + Creator.getSDC());
+							}
+							if (mDb.getProducerMap().containsKey(personName)) {
+								MyHistogram histogram = new MyHistogram(mDb.getProducerMap(), Creator.getMPC() + Creator.getSPC());
+							}
+						}
 					}
 				}
 			    
