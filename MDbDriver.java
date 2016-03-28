@@ -384,6 +384,9 @@ public class MDbDriver implements Serializable{
 	    				System.out.println("Enter a file to save to:");
 	    				String fileName = inputReader.readLine();
 	    				writeDatabase(fileName, mDb);
+	    				
+	    				System.out.println("Saving...");
+	    				System.out.println("Done");
 	    			}
 			    	
 			    } else if (yn.equalsIgnoreCase("n")){
