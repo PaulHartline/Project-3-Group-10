@@ -693,6 +693,14 @@ if (nextLine.contains(",") && nextLine.contains("\t")) {
 		}
 		return producers;
 	}
+	
+	/**
+	 * Returns a string of a creator
+	 */
+	public String toString() {
+		return "MOVIE " + getType() + ": " + getTitle() + getYear() + "\n";	
+	}
+	
 	public static int directorCredits() {
 		int directorCredits = 0;
 		
