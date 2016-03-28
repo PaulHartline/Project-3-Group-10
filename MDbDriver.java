@@ -98,6 +98,8 @@ public class MDbDriver implements Serializable{
 				System.out.println("What is the Actor file?");
 				String actorFile = inputReader.readLine();
 				File actors = new File(actorFile);
+				FileReader actorReader = new FileReader(actors);
+				BufferedReader actorBReader = new BufferedReader(actorReader);
 				while (!actors.exists()) {
 					if (actorFile.equals(""))
 					{
@@ -119,8 +121,8 @@ public class MDbDriver implements Serializable{
 					}
 				}
 				actors = new File(actorFile);
-				actorList = Creator.fillActors(actors);
-				System.out.println("ActorList" + actorList.size());
+				actorList = Creator.fillActors(actors, actorBReader);
+				//System.out.println("ActorList" + actorList.size());
 				for (int i = 1; i < actorList.size(); ++i) {
 					if (!actorList.get(i).getName().equals("") && 
 							!actorList.get(i).getName().equals(actorList.get(i - 1).getName())) {
@@ -132,6 +134,8 @@ public class MDbDriver implements Serializable{
 				System.out.println("What is the Director file?");
 				String directorFile = inputReader.readLine();
 				File directors = new File(directorFile);
+				FileReader directors = new FileReader(directors);
+				BufferedReader directorBReader = new BufferedReader(directors);
 				while (!directors.exists()) {
 					if (directorFile.equals(""))
 					{
@@ -153,7 +157,7 @@ public class MDbDriver implements Serializable{
 					}
 					directors = new File(directorFile);
 				}
-				directorList = Creator.fillDirectors(directors);
+				directorList = Creator.fillDirectors(directors, directorBReader);
 				for (int i = 1; i < directorList.size(); ++i) {
 					if (!directorList.get(i).getName().equals("") && 
 							!directorList.get(i).getName().equals(directorList.get(i - 1).getName())) {
@@ -165,6 +169,8 @@ public class MDbDriver implements Serializable{
 				System.out.println("What is the Producer file?");
 				String producerFile = inputReader.readLine();
 				File producers = new File(producerFile);
+				FileReader producerReader = new FileReader(producers);
+				BufferedReader producerBReader = new BufferedReader(producerReader);
 				while (!producers.exists()) {
 					if (producerFile.equals(""))
 					{
@@ -186,7 +192,7 @@ public class MDbDriver implements Serializable{
 					}
 					producers = new File(producerFile);
 				}
-				producerList = Creator.fillProducers(producers);
+				producerList = Creator.fillProducers(producers, producerBReader);
 				for (int i = 1; i < producerList.size(); ++i) {
 					if (!producerList.get(i).getName().equals("") && 
 							!producerList.get(i).getName().equals(producerList.get(i - 1).getName())) {
