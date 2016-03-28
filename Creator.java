@@ -15,11 +15,11 @@ public class Creator extends Show {
 
 	
 	/** List that stores information about actors  */
-	private static ArrayList<Creator> actors = new ArrayList<Creator>();
+	public static ArrayList<Creator> actors = new ArrayList<Creator>();
 	/** List that stores information about directors */
-	private static ArrayList<Creator> directors = new ArrayList<Creator>();
+	public static ArrayList<Creator> directors = new ArrayList<Creator>();
 	/** List that stores information about producers */
-	private static ArrayList<Creator> producers = new ArrayList<Creator>();
+	public static ArrayList<Creator> producers = new ArrayList<Creator>();
 	/** The name of the creator */
 	private String name;
 	/** The title of the work that is associated with its creator */
