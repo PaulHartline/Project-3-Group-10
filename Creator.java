@@ -226,6 +226,10 @@ public class Creator extends Show {
 				// assigns name a value
 				name = nextLine.substring(0, nextLine.indexOf("\t")).trim();
 				
+				String[] nameArray = name.split(",");
+				
+				name = nameArray[1].trim()+ " " + nameArray[0].trim();
+				
 				// if name has parentheses
 				if (name.contains("(")) {
 					title = nextLine.substring(nextLine.indexOf("\t"),
@@ -431,6 +435,10 @@ public class Creator extends Show {
 				// assigns name a value
 				name = nextLine.substring(0, nextLine.indexOf("\t")).trim();
 				
+				String[] nameArray = name.split(",");
+				
+				name = nameArray[1].trim()+ " " + nameArray[0].trim();
+				
 				// if name has parentheses
 				if (name.contains("(")) {
 					title = nextLine.substring(nextLine.indexOf("\t"),
@@ -606,6 +614,10 @@ if (nextLine.contains(",") && nextLine.contains("\t")) {
 				
 				// assigns name a value
 				name = nextLine.substring(0, nextLine.indexOf("\t")).trim();
+				
+				String[] nameArray = name.split(",");
+				
+				name = nameArray[1].trim()+ " " + nameArray[0].trim();
 				
 				// if name has parentheses
 				if (name.contains("(")) {
