@@ -29,7 +29,12 @@ public class MDbDriver implements Serializable{
 	 */
 	public static void main(String[] args) throws ClassNotFoundException {
 		BufferedReader inputReader= new BufferedReader(new InputStreamReader(System.in));
-		LinkedHashMap<String, ArrayList<Creator>> creatorList = new LinkedHashMap<String, ArrayList<Creator>>();
+		ArrayList<Creator> actorList = new ArrayList<Creator>();
+		ArrayList<Creator> directorList = new ArrayList<Creator>();
+		ArrayList<Creator> producerList = new ArrayList<Creator>();
+		LinkedHashMap<String, ArrayList<Creator>> actorMap = new LinkedHashMap<String, ArrayList<Creator>>();
+		LinkedHashMap<String, ArrayList<Creator>> directorMap = new LinkedHashMap<String, ArrayList<Creator>>();
+		LinkedHashMap<String, ArrayList<Creator>> producerMap = new LinkedHashMap<String, ArrayList<Creator>>();
 		try {
 			System.out.println("Read (t)ext or (b)inary data?h");
 			String textOrBinary = inputReader.readLine();
@@ -111,12 +116,11 @@ public class MDbDriver implements Serializable{
 						counter = 0;
 					}
 					actors = new File(actorFile);
-					ArrayList<Creator> actorList = new ArrayList<Creator>();
 					actorList = Creator.fillActors(actors, inputReader);
 					for (int i = 0; i < actorList.size(); ++i) {
 						if (!actorList.get(i).getName().equals("") && 
 								!actorList.get(i).getName().equals(actorList.get(i - 1).getName())) {
-							creatorList.put(actorList.get(i).getName(), new ArrayList<Creator>
+							actorMap.put(actorList.get(i).getName(), new ArrayList<Creator>
 									(actorList.subList(actorList.get(i).getName().indexOf(actorList.get(i).getName()),
 											actorList.get(i).getName().indexOf(actorList.get(i - 1).getName()))));
 						}
@@ -145,12 +149,11 @@ public class MDbDriver implements Serializable{
 						counter = 0;
 					}
 					directors = new File(directorFile);
-					ArrayList<Creator> directorList = new ArrayList<Creator>();
 					directorList = Creator.fillDirectors(directors, inputReader);
 					for (int i = 0; i < directorList.size(); ++i) {
 						if (!directorList.get(i).getName().equals("") && 
 								!directorList.get(i).getName().equals(directorList.get(i - 1).getName())) {
-							creatorList.put(directorList.get(i).getName(), new ArrayList<Creator>
+							directorMap.put(directorList.get(i).getName(), new ArrayList<Creator>
 									(directorList.subList(directorList.get(i).getName().indexOf(directorList.get(i).getName()),
 											directorList.get(i).getName().indexOf(directorList.get(i - 1).getName()))));
 						}
@@ -179,12 +182,11 @@ public class MDbDriver implements Serializable{
 						counter = 0;
 					}
 					producers = new File(producerFile);
-					ArrayList<Creator> producerList = new ArrayList<Creator>();
 					producerList = Creator.fillProducers(producers, inputReader);
 					for (int i = 0; i < producerList.size(); ++i) {
 						if (!producerList.get(i).getName().equals("") && 
 								!producerList.get(i).getName().equals(producerList.get(i - 1).getName())) {
-							creatorList.put(producerList.get(i).getName(), new ArrayList<Creator>
+							producerMap.put(producerList.get(i).getName(), new ArrayList<Creator>
 									(producerList.subList(producerList.get(i).getName().indexOf(producerList.get(i).getName()),
 											producerList.get(i).getName().indexOf(producerList.get(i - 1).getName()))));
 						}
@@ -358,6 +360,32 @@ public class MDbDriver implements Serializable{
 					if (ToG.equalsIgnoreCase("t"))
 					{
 						//Output text format
+						//Output text format
+						System.out.println("SEARCHED PEOPLE");
+						if (exactPartial.equalsIgnoreCase("e")) System.out.println("EXACT NAME: " + personName);
+						if (exactPartial.equalsIgnoreCase("p")) System.out.println("PARTIAL NAME: " + personName);
+						System.out.println("================================================================================");
+						for (int i = 0; i < actorList.size(); ++i) {
+						if (actorMap.containsKey(personName)) {
+							System.out.println(personName);
+							System.out.println("ACTING");
+							actorMap.get(personName).toString();
+						}
+						}
+						for (int b = 0; b < directorList.size(); ++b) {
+						if (directorMap.containsKey(personName)) {
+							System.out.println(personName);
+							System.out.println("DIRECTING");
+							directorMap.get(personName).toString();
+						}
+						}
+						for (int a = 0; a < producerList.size(); ++a) {
+						if (producerMap.containsKey(personName)) {
+							System.out.println(personName);
+							System.out.println("PRODUCING");
+							producerMap.get(personName).toString();
+						}
+						}
 					}
 					else
 					{
