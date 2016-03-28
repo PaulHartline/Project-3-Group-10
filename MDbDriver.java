@@ -125,8 +125,8 @@ public class MDbDriver implements Serializable{
 					if (!actorList.get(i).getName().equals("") && 
 							!actorList.get(i).getName().equals(actorList.get(i - 1).getName())) {
 						actorMap.put(actorList.get(i).getName(), new ArrayList<Creator>
-								(actorList.subList(actorList.get(i).getName().indexOf(actorList.get(i).getName()),
-										actorList.get(i).getName().indexOf(actorList.get(i - 1).getName()))));
+								(actorList.subList(actorList.get(i).getName().indexOf(actorList.get(i-1).getName()),
+										actorList.get(i).getName().indexOf(actorList.get(i).getName()))));
 					}
 				}
 				System.out.println("What is the Director file?");

@@ -184,6 +184,7 @@ public class Creator extends Show {
 					}
 					else {
 					episodeTitle = nextLine.substring(nextLine.indexOf("{") + 1, nextLine.indexOf("}"));
+					if (episodeTitle.indexOf("(") > 0)
 					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("), episodeTitle.indexOf(")") + 1);
 					}
 					// if episodeNumber is part of episodeTitle
@@ -298,7 +299,8 @@ public class Creator extends Show {
 					}
 					else {
 					episodeTitle = nextLine.substring(nextLine.indexOf("{") + 1, nextLine.indexOf("}"));
-					episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("), episodeTitle.indexOf(")") + 1);
+					if (episodeTitle.indexOf("(") > 0)
+						episodeNumber = episodeTitle.substring(episodeTitle.indexOf("("), episodeTitle.indexOf(")") + 1);
 					}
 					// if episodeNumber is part of episodeTitle
 					if (episodeTitle.contains("#")) {
@@ -315,9 +317,12 @@ public class Creator extends Show {
 				// checks if episode information is given by YYYY-MM-DD
 				if (episodeTitle.contains("-")) {
 					// if this is present, then assume there is no episode number and episodeTitle = episodeDate
+					if (episodeTitle.indexOf("(") > 0)
+					{
 					episodeTitle = episodeTitle.substring(episodeTitle.indexOf("("),
 							episodeTitle.indexOf(")") + 1);
 					episodeNumber = "";
+					}
 				}
 				
 				// if role is present, if not role remains empty
