@@ -118,8 +118,8 @@ public class MDbDriver implements Serializable{
 						counter = 0;
 					}
 					actors = new File(actorFile);
+					actorList = Creator.fillActors(actors);
 				}
-				actorList = Creator.fillActors(actors, inputReader);
 				for (int i = 0; i < actorList.size(); ++i) {
 					if (!actorList.get(i).getName().equals("") && 
 							!actorList.get(i).getName().equals(actorList.get(i - 1).getName())) {
@@ -152,7 +152,7 @@ public class MDbDriver implements Serializable{
 					}
 					directors = new File(directorFile);
 				}
-				directorList = Creator.fillDirectors(directors, inputReader);
+				directorList = Creator.fillDirectors(directors);
 				for (int i = 0; i < directorList.size(); ++i) {
 					if (!directorList.get(i).getName().equals("") && 
 							!directorList.get(i).getName().equals(directorList.get(i - 1).getName())) {
@@ -185,7 +185,7 @@ public class MDbDriver implements Serializable{
 					}
 					producers = new File(producerFile);
 				}
-				producerList = Creator.fillProducers(producers, inputReader);
+				producerList = Creator.fillProducers(producers);
 				for (int i = 0; i < producerList.size(); ++i) {
 					if (!producerList.get(i).getName().equals("") && 
 							!producerList.get(i).getName().equals(producerList.get(i - 1).getName())) {

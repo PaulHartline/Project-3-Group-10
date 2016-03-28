@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -126,8 +127,11 @@ public class Creator extends Show {
 	 * @return Returns an arraylist of actors to be used later.
 	 * @throws IOException
 	 */
-	public static ArrayList<Creator> fillActors (File actor, BufferedReader br) throws IOException {
+	public static ArrayList<Creator> fillActors (File actor) throws IOException {
 		
+		
+		FileReader fr = new FileReader(actor);
+		BufferedReader br = new BufferedReader(fr);
 		// Initializing string that keeps track of the lines
 		String nextLine = null;
 		// Creating empty strings to be filled in later
@@ -356,6 +360,7 @@ public class Creator extends Show {
 			}
 			
 		}
+		br.close();
 		return actors;
 	}
 	
@@ -366,8 +371,9 @@ public class Creator extends Show {
 	 * @return Returns an ArrayList of directors to be used later.
 	 * @throws IOException
 	 */
-	public static ArrayList<Creator> fillDirectors (File director, BufferedReader br) throws IOException {
-		
+	public static ArrayList<Creator> fillDirectors (File director) throws IOException {
+		FileReader fr = new FileReader(director);
+		BufferedReader br = new BufferedReader(fr);
 		String nextLine = null;
 		String name = "";
 		String title = "";
@@ -509,6 +515,7 @@ public class Creator extends Show {
 				nextLine = br.readLine();
 			}
 		}
+		br.close();
 		return directors;
 	}
 	
@@ -519,8 +526,9 @@ public class Creator extends Show {
 	 * @return Returns an arraylist of producers to be used later.
 	 * @throws IOException
 	 */
-	public static ArrayList<Creator> fillProducers (File producer, BufferedReader br) throws IOException {
-		
+	public static ArrayList<Creator> fillProducers (File producer) throws IOException {
+		FileReader fr = new FileReader(producer);
+		BufferedReader br = new BufferedReader(fr);
 		String nextLine = null;
 		String name = "";
 		String title = "";
@@ -712,6 +720,7 @@ if (nextLine.contains(",") && nextLine.contains("\t")) {
 				nextLine = br.readLine();
 			}
 		}
+		br.close();
 		return producers;
 	}
 	
