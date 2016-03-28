@@ -98,6 +98,8 @@ public class MDbDriver implements Serializable{
 				System.out.println("What is the Actor file?");
 				String actorFile = inputReader.readLine();
 				File actors = new File(actorFile);
+				FileReader actorReader = new FileReader(actors);
+				BufferedReader actorBReader = new BufferedReader(actorReader);
 				while (!actors.exists()) {
 					if (actorFile.equals(""))
 					{
@@ -117,6 +119,7 @@ public class MDbDriver implements Serializable{
 					{
 						counter = 0;
 					}
+<<<<<<< HEAD
 				}
 				actors = new File(actorFile);
 				actorList = Creator.fillActors(actors);
@@ -127,11 +130,24 @@ public class MDbDriver implements Serializable{
 						actorMap.put(actorList.get(i).getName(), new ArrayList<Creator>
 								(actorList.subList(actorList.get(i).getName().indexOf(actorList.get(i-1).getName()),
 										actorList.get(i).getName().indexOf(actorList.get(i).getName()))));
+=======
+					actors = new File(actorFile);
+					actorList = Creator.fillActors(actors, actorBReader);
+					for (int i = 1; i < actorList.size(); ++i) {
+						if (!actorList.get(i).getName().equals("") && 
+								!actorList.get(i).getName().equals(actorList.get(i - 1).getName())) {
+							mDb.getActorMap.put(actorList.get(i).getName(), new ArrayList<Creator>
+									(actorList.subList(actorList.get(i).getName().indexOf(actorList.get(i).getName()),
+											actorList.get(i).getName().indexOf(actorList.get(i - 1).getName()))));
+						}
+>>>>>>> origin/TylerBranch
 					}
 				}
 				System.out.println("What is the Director file?");
 				String directorFile = inputReader.readLine();
 				File directors = new File(directorFile);
+				FileReader directorReader = new FileReader(directors);
+				BufferedReader directorBReader = new BufferedReader(directorReader);
 				while (!directors.exists()) {
 					if (directorFile.equals(""))
 					{
@@ -152,6 +168,7 @@ public class MDbDriver implements Serializable{
 						counter = 0;
 					}
 					directors = new File(directorFile);
+<<<<<<< HEAD
 				}
 				directorList = Creator.fillDirectors(directors);
 				for (int i = 1; i < directorList.size(); ++i) {
@@ -160,11 +177,23 @@ public class MDbDriver implements Serializable{
 						directorMap.put(directorList.get(i).getName(), new ArrayList<Creator>
 								(directorList.subList(directorList.get(i).getName().indexOf(directorList.get(i).getName()),
 										directorList.get(i).getName().indexOf(directorList.get(i - 1).getName()))));
+=======
+					directorList = Creator.fillDirectors(directors, directorBReader);
+					for (int i = 1; i < directorList.size(); ++i) {
+						if (!directorList.get(i).getName().equals("") && 
+								!directorList.get(i).getName().equals(directorList.get(i - 1).getName())) {
+							mDb.getDirectorMap.put(directorList.get(i).getName(), new ArrayList<Creator>
+									(directorList.subList(directorList.get(i).getName().indexOf(directorList.get(i).getName()),
+											directorList.get(i).getName().indexOf(directorList.get(i - 1).getName()))));
+						}
+>>>>>>> origin/TylerBranch
 					}
 				}
 				System.out.println("What is the Producer file?");
 				String producerFile = inputReader.readLine();
 				File producers = new File(producerFile);
+				FileReader producerReader = new FileReader(producers);
+				BufferedReader producerBReader = new BufferedReader(producerReader);
 				while (!producers.exists()) {
 					if (producerFile.equals(""))
 					{
@@ -185,6 +214,7 @@ public class MDbDriver implements Serializable{
 						counter = 0;
 					}
 					producers = new File(producerFile);
+<<<<<<< HEAD
 				}
 				producerList = Creator.fillProducers(producers);
 				for (int i = 1; i < producerList.size(); ++i) {
@@ -193,6 +223,16 @@ public class MDbDriver implements Serializable{
 						producerMap.put(producerList.get(i).getName(), new ArrayList<Creator>
 								(producerList.subList(producerList.get(i).getName().indexOf(producerList.get(i).getName()),
 										producerList.get(i).getName().indexOf(producerList.get(i - 1).getName()))));
+=======
+					producerList = Creator.fillProducers(producers, producerBReader);
+					for (int i = 1; i < producerList.size(); ++i) {
+						if (!producerList.get(i).getName().equals("") && 
+								!producerList.get(i).getName().equals(producerList.get(i - 1).getName())) {
+							mDb.getProducerMap.put(producerList.get(i).getName(), new ArrayList<Creator>
+									(producerList.subList(producerList.get(i).getName().indexOf(producerList.get(i).getName()),
+											producerList.get(i).getName().indexOf(producerList.get(i - 1).getName()))));
+						}
+>>>>>>> origin/TylerBranch
 					}
 				}
 				
