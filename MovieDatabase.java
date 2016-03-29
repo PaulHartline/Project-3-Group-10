@@ -325,6 +325,11 @@ public class MovieDatabase implements Serializable{
 		return new Episode(name, year, episodeNumber, series);
 	}
 	
+	/**
+	 * @param LinkedHashMap<String, ArrayList<Creator>> associated with actors
+	 * @param LinkedHashMap<String, ArrayList<Creator>> associated with directors
+	 * @param LinkedHashMap<String, ArrayList<Creator>> associated with producers
+	 */
 	public void putHashMapIntoDB(LinkedHashMap<String, ArrayList<Creator>> actors, LinkedHashMap<String, ArrayList<Creator>> directors, LinkedHashMap<String, ArrayList<Creator>> producers)
 	{
 		this.actors = actors;
@@ -332,16 +337,25 @@ public class MovieDatabase implements Serializable{
 		this.producers = producers;
 	}
 	
+	/**
+	 * @return this object's LinkedHashMap<String, ArrayList<Creator>> , containing an ArrayList of the actors.
+	 */
 	public LinkedHashMap<String, ArrayList<Creator>> getActorMap()
 	{
 		return actors;
 	}
 	
+	/**
+	 * @return this object's LinkedHashMap<String, ArrayList<Creator>> , containing an ArrayList of the directors.
+	 */
 	public LinkedHashMap<String, ArrayList<Creator>> getDirectorMap()
 	{
 		return directors;
 	}
 	
+	/**
+	 * @return this object's LinkedHashMap<String, ArrayList<Creator>> , containing an ArrayList of the producers.
+	 */
 	public LinkedHashMap<String, ArrayList<Creator>> getProducerMap()
 	{
 		return producers;

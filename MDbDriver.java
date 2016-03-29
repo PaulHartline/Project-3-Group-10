@@ -18,7 +18,8 @@ import java.util.Map.Entry;
  * CS 2334, Section 011
  * Feb 26, 2016
  * <P>
- * Runs the program. Contains both the main method and initializes the database
+ * Runs the program. Contains both the main method and initializes the database.
+ * Also handles the output and searching of creators.
  * </P>
  */
 public class MDbDriver implements Serializable{
@@ -38,7 +39,7 @@ public class MDbDriver implements Serializable{
 		LinkedHashMap<String, ArrayList<Creator>> directorMap = new LinkedHashMap<String, ArrayList<Creator>>();
 		LinkedHashMap<String, ArrayList<Creator>> producerMap = new LinkedHashMap<String, ArrayList<Creator>>();
 		try {
-			System.out.println("Read (t)ext or (b)inary data?h");
+			System.out.println("Read (t)ext or (b)inary data?");
 			String textOrBinary = inputReader.readLine();
 			MovieDatabase mDb = new MovieDatabase();
 			
@@ -120,13 +121,13 @@ public class MDbDriver implements Serializable{
 				}
 				actors = new File(actorFile);
 				actorList = Creator.fillActors(actors);
-				System.out.println("ActorList" + actorList.size());
+				System.out.println("ActorList Size:" + actorList.size());
 				for (int i = 1; i < actorList.size(); ++i) {
 					if (!actorList.get(i).getName().equals("") && 
 							!actorList.get(i).getName().equals(actorList.get(i - 1).getName())) {
 						actorMap.put(actorList.get(i).getName(), new ArrayList<Creator>
-								(actorList.subList(actorList.get(i).getName().indexOf(actorList.get(i-1).getName()),
-										actorList.get(i).getName().indexOf(actorList.get(i).getName()))));
+								(actorList.subList(actorList.get(i).getName().indexOf(actorList.get(i).getName()),
+										actorList.get(i).getName().indexOf(actorList.get(i+1).getName()))));
 					}
 				}
 				System.out.println("What is the Director file?");
@@ -203,7 +204,7 @@ public class MDbDriver implements Serializable{
 			{
 				System.out.println("Enter a file name to read in");
 				String inputFile = inputReader.readLine();
-				readDatabase(inputFile);
+				mDb = readDatabase(inputFile);
 				
 			}
 			
@@ -371,34 +372,24 @@ public class MDbDriver implements Serializable{
 								}
 							}
 							
-							for (Map.Entry<String, ArrayList<Creator>> entry : mDb.getActorMap().entrySet()) {
-								creatorResults = entry.getValue();
-								for (Creator c : creatorResults)
+							creatorResults = directorMap.get(personName);
+							for (Creator c : creatorResults)
+							{
+								if (c.getName().equals(personName))
 								{
-									if (c.getName().equals(personName))
-									{
-										System.out.println(c.getName());
-										System.out.println("ACTING");
-										mDb.getActorMap().get(c.getName()).toString();
-									}
+									System.out.println(c.getName());
+									System.out.println("DIRECTING");
+									mDb.getDirectorMap().get(c.getName()).toString();
 								}
 							}
-							for (Map.Entry<String, ArrayList<Creator>> map: mDb.getDirectorMap().entrySet()) {
-								String key = map.getKey();
-								creatorResults = map.getValue();
-								if (key.equals(personName)) {
-								System.out.println(key);
-								System.out.println("DIRECTING");
-								mDb.getDirectorMap().get(key).toString();
-								}
-							}
-							for (Map.Entry<String, ArrayList<Creator>> map: mDb.getProducerMap().entrySet()) {
-								String key = map.getKey();
-								creatorResults = map.getValue();
-								if (key.equals(personName)) {
-								System.out.println(key);
-								System.out.println("PRODUCING");
-								mDb.getProducerMap().get(key).toString();
+							creatorResults = producerMap.get(personName);
+							for (Creator c : creatorResults)
+							{
+								if (c.getName().equals(personName))
+								{
+									System.out.println(c.getName());
+									System.out.println("PRODUCING");
+									mDb.getProducerMap().get(c.getName()).toString();
 								}
 							}
 						}
@@ -408,7 +399,6 @@ public class MDbDriver implements Serializable{
 							for (Map.Entry<String, ArrayList<Creator>> entry : mDb.getActorMap().entrySet()) {
 							    String key = entry.getKey();
 								creatorResults = entry.getValue();
-								System.out.println("BLAH");
 								for (Creator c : creatorResults)
 								{
 									if (c.getName().contains(personName))
@@ -505,6 +495,12 @@ public class MDbDriver implements Serializable{
 	        
 	}
 	
+	
+	/**Writes database object to a file specified by filename
+	 * @param String
+	 * @param MovieDatabase
+	 * @throws IOException
+	 */
 	public static void writeDatabase(String filename, MovieDatabase database) throws IOException
 	{
 		FileOutputStream fileOutputStream = new FileOutputStream(filename);
@@ -513,6 +509,10 @@ public class MDbDriver implements Serializable{
 		objectOutputStream.close();
 	}
 	
+	/**Reads the database object from a specified filename into the program.
+	 * @return MovieDatabase
+	 * @throws IOException, ClassNotFoundException
+	 */
 	public static MovieDatabase readDatabase(String filename) throws IOException, ClassNotFoundException
 	{
 		FileInputStream fileInputStream = new FileInputStream(filename);
