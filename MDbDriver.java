@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.swing.JFrame;
+
 /**
  * Project #3
  * CS 2334, Section 010
@@ -431,13 +433,33 @@ public class MDbDriver implements Serializable{
 					}
 					else
 					{
-						Slice[] slices = { new Slice(Creator.getMPC(), Color.black), new Slice(Creator.getSPC(), Color.green),
-					 		      new Slice(Creator.getSAC(), Color.yellow), new Slice(Creator.getMAC(), Color.red), 
-					 		      new Slice(Creator.getSDC(), Color.blue), new Slice(Creator.getMDC(), Color.pink)};
-						BufferedImage image = new BufferedImage(500, 500, BufferedImage.TYPE_INT_ARGB);
-						Graphics2D g = image.createGraphics();
-						MyPieChart.drawPie(g, new Rectangle(500, 500), slices);
+
+						System.out.println("Display data in a (P)ie Chart or (H)istogram?");
+						String PoH = inputReader.readLine();
+						while (!PoH.equalsIgnoreCase("p") && !PoH.equalsIgnoreCase("h")) {
+							System.out.println("Sorry, not valid input. Try again");
+						}
+						if (PoH.equalsIgnoreCase("p")) {
+							Slice[] slices = { new Slice(Creator.getMPC(), Color.black), new Slice(Creator.getSPC(), Color.green),
+						 		      new Slice(Creator.getSAC(), Color.yellow), new Slice(Creator.getMAC(), Color.red), 
+						 		      new Slice(Creator.getSDC(), Color.blue), new Slice(Creator.getMDC(), Color.pink)};
+							JFrame frame = new JFrame();
+						      frame.getContentPane().add(new MyPieChart());
+						      frame.setSize(500, 500);
+						      frame.setVisible(true);
+						}
+						else {
+							if (mDb.getActorMap().containsKey(personName)) {
+								MyHistogram histogram = new MyHistogram(mDb.getActorMap(), Creator.getMAC() + Creator.getSAC());
+							}
+							if (mDb.getDirectorMap().containsKey(personName)) {
+								MyHistogram histogram = new MyHistogram(mDb.getDirectorMap(), Creator.getMDC() + Creator.getSDC());
+							}
+							if (mDb.getProducerMap().containsKey(personName)) {
+								MyHistogram histogram = new MyHistogram(mDb.getProducerMap(), Creator.getMPC() + Creator.getSPC());
+							}
 					}
+				}
 
 				}
 			    
