@@ -12,8 +12,21 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+/**
+ * Project #3
+ * CS 2334, Section 010
+ * Mar 26, 2016
+ * <P>
+ * Class for making the histogram
+ * </P>
+ */
 public class MyHistogram {
 
+	 /** 
+	   * Creates a frame and a histogram
+	   * @param LinkedHashMap
+	   * @param double
+	   */
 	public MyHistogram(LinkedHashMap entry, double amount) {
         int width = 256;
         int height = 256;
@@ -44,13 +57,29 @@ public class MyHistogram {
         frame.setVisible(true);
     }
 
+	/**
+	 * Project #3
+	 * CS 2334, Section 010
+	 * Mar 26, 2016
+	 * <P>
+	 * Class within a class for drawing out the histogram components
+	 * </P>
+	 */
     protected class Graph extends JPanel {
-
+    	
+    	 /** So compiler doesn't yell at us*/
     	private static final long serialVersionUID = 1L;
 		
+    	 /** minimum width of the histogram bars*/
     	protected static final int MIN_BAR_WIDTH = 4;
+    	
+    	 /** Map containing an integer for key and an integer for value.*/
         private Map<Integer, Integer> mapHistory;
 
+        /** 
+  	   * Draws out the histogram
+  	   * @param Map<Integer, Integer>
+  	   */
         public Graph(Map<Integer, Integer> mapHistory) {
             this.mapHistory = mapHistory;
             int width = (mapHistory.size() * MIN_BAR_WIDTH) + 11;
@@ -60,6 +89,11 @@ public class MyHistogram {
             setPreferredSize(prefSize);
         }
 
+        
+        /** 
+  	   * paints the histogram
+  	   * @param Graphics
+  	   */
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -86,7 +120,7 @@ public class MyHistogram {
                             / (float) maxValue) * height);
                     g2d.setColor(new Color(key, key, key));
                     int yPos = height + yOffset - barHeight;
-//Rectangle bar = new Rectangle(xPos, yPos, barWidth, barHeight);
+                    //Rectangle bar = new Rectangle(xPos, yPos, barWidth, barHeight);
                     Rectangle2D bar = new Rectangle2D.Float(
                             xPos, yPos, barWidth, barHeight);
                     g2d.fill(bar);

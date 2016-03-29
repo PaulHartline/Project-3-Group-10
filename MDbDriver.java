@@ -1,3 +1,7 @@
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,19 +15,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
- * Project #2
- * CS 2334, Section 011
- * Feb 26, 2016
+ * Project #3
+ * CS 2334, Section 010
+ * Mar 26, 2016
  * <P>
  * Runs the program. Contains both the main method and initializes the database.
  * Also handles the output and searching of creators.
  * </P>
  */
 public class MDbDriver implements Serializable{
-
+	
+	/** SerialID that lets us implement Serializable */
 	private static final long serialVersionUID = 1L;
 	
 	/**Initializes the database and runs program based on user input
@@ -45,7 +49,7 @@ public class MDbDriver implements Serializable{
 			
 			if (textOrBinary.equals("t"))
 			{
-			
+				//to see if the user presses enter twice
 				int counter = 0;
 				
 				System.out.println("What is the movie file?");
@@ -396,19 +400,15 @@ public class MDbDriver implements Serializable{
 						else
 						{
 							//Code for partial matches
-							for (Map.Entry<String, ArrayList<Creator>> entry : mDb.getActorMap().entrySet()) {
-							    String key = entry.getKey();
-								creatorResults = entry.getValue();
-								for (Creator c : creatorResults)
-								{
-									if (c.getName().contains(personName))
-									{
-										System.out.println(c.getName());
-										System.out.println("ACTING");
-										mDb.getActorMap().get(c.getName()).toString();
-									}
+							for (Map.Entry<String, ArrayList<Creator>> map: mDb.getActorMap().entrySet()) {
+								String key = map.getKey();
+								creatorResults = map.getValue();
+								if (key.contains(personName)) {
+								System.out.println(key);
+								System.out.println("DIRECTING");
+								mDb.getActorMap().get(key).toString();
 								}
-								}
+							}
 						for (Map.Entry<String, ArrayList<Creator>> map: mDb.getDirectorMap().entrySet()) {
 							String key = map.getKey();
 							creatorResults = map.getValue();
@@ -431,8 +431,14 @@ public class MDbDriver implements Serializable{
 					}
 					else
 					{
-						//output in graph format
+						Slice[] slices = { new Slice(Creator.getMPC(), Color.black), new Slice(Creator.getSPC(), Color.green),
+					 		      new Slice(Creator.getSAC(), Color.yellow), new Slice(Creator.getMAC(), Color.red), 
+					 		      new Slice(Creator.getSDC(), Color.blue), new Slice(Creator.getMDC(), Color.pink)};
+						BufferedImage image = new BufferedImage(500, 500, BufferedImage.TYPE_INT_ARGB);
+						Graphics2D g = image.createGraphics();
+						MyPieChart.drawPie(g, new Rectangle(500, 500), slices);
 					}
+
 				}
 			    
 			    System.out.println("Save (y/n)?");

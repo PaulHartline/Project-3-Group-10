@@ -2,15 +2,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Project #1
- * CS 2334, Section 011
- * Feb 16, 2016
+ * Project #3
+ * CS 2334, Section 010
+ * Mar 26, 2016
  * <P>
  * Class for storing information about TVShows
  * </P>
  */
 public class TVSeries extends Show implements Serializable{
 	
+	/** SerialID that lets us implement Serializable */
 	private static final long serialVersionUID = 1L;
 
 	/**ArrayList of episodes within a series*/

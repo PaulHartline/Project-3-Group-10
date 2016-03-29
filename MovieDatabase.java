@@ -7,9 +7,9 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 
 /**
- * Project #2
- * CS 2334, Section 011
- * Feb 26, 2016
+ * Project #3
+ * CS 2334, Section 010
+ * Mar 26, 2016
  * <P>
  * Maintains the list of all shows and movies. Enabling the program
  * to parse and add shows and search for them
@@ -17,14 +17,23 @@ import java.util.LinkedHashMap;
  */
 public class MovieDatabase implements Serializable{
 	
+	/** SerialID that lets us implement Serializable */
 	private static final long serialVersionUID = 1L;
 	
 	/**List containing all the movies and TV shows*/
 	private ArrayList<Show> mDb = new ArrayList<Show>();
+	/**LinkedHashMap containing all the actors*/
 	private LinkedHashMap<String, ArrayList<Creator>> actors = new LinkedHashMap<String, ArrayList<Creator>>();
+	/**LinkedHashMap containing all the directors*/
 	private LinkedHashMap<String, ArrayList<Creator>> directors = new LinkedHashMap<String, ArrayList<Creator>>();
+	/**LinkedHashMap containing all the producers*/
 	private LinkedHashMap<String, ArrayList<Creator>> producers = new LinkedHashMap<String, ArrayList<Creator>>();
 	
+	/**Constructor for MDb class. 
+	 * 
+	 * Just here to make the compiler happy.
+	 * 
+	 */
 	public MovieDatabase()
 	{
 		//intentionally empty
@@ -48,7 +57,7 @@ public class MovieDatabase implements Serializable{
 	 * 
 	 * @param file Name of File containing shows
 	 * @param isMovie true if file contains movies, false if file containing TV
-	 * @throws FileNotFoundException 
+	 * @throws IOException 
 	 */
 	private ArrayList<Show> readShowsIntoDB(String file, boolean isMovie) throws IOException {
 		FileReader fr = new FileReader(file);
@@ -95,7 +104,7 @@ public class MovieDatabase implements Serializable{
 	 * @param sortByTitle Sort by title (if true) or by year (if false)
 	 * @param title Title to search for. "'-1'" will be if any
 	 * @param years Years to search for. "-1" will be in first index if any
-	 * @return
+	 * @return ArrayList<Show>
 	 */
 	public ArrayList<Show> searchFiles(boolean movies, boolean tv, 
 			boolean episodes, boolean exactMatch, boolean sortByTitle, String title, ArrayList<String> years) {
@@ -133,96 +142,6 @@ public class MovieDatabase implements Serializable{
 			Collections.sort(shows, Show.YEAR_COMPARATOR);
 		}
 		return shows;
-	}
-	
-	/**Search database for specific shows
-	 * 
-	 * @param movies Search for movies?
-	 * @param tv Search for TV shows?
-	 * @param episodes Search for specific episodes? (Can't be true if tv is false)
-	 * @param exactMatch Only allow if title exactly matches search
-	 * @param sortByTitle Sort by title (if true) or by year (if false)
-	 * @param title Title to search for. "'-1'" will be if any
-	 * @param years Years to search for. "-1" will be in first index if any
-	 * @return
-	 */
-	public ArrayList<Creator> searchFiles(boolean actor, boolean director, 
-			boolean producer, boolean exactMatch, String name) {
-		
-		ArrayList<Creator> creators = new ArrayList<Creator>();
-		
-			if (!exactMatch)
-			{
-				if (actor)
-				{
-					for (Creator creator : Creator.actors)
-					{
-						if (creator.getName().toLowerCase().matches(".*" + name.toLowerCase() + ".*"))
-						{
-							creators.add(creator);
-						}
-					}
-				}
-				
-				else if (director)
-				{
-					for (Creator creator : Creator.directors)
-					{
-						if (creator.getName().toLowerCase().matches(".*" + name.toLowerCase() + ".*"))
-						{
-							creators.add(creator);
-						}
-					}
-				}
-				
-				else if (producer)
-				{
-					for (Creator creator : Creator.producers)
-					{
-						if (creator.getName().toLowerCase().matches(".*" + name.toLowerCase() + ".*"))
-						{
-							creators.add(creator);
-						}
-					}
-				}
-			}
-			else
-			{
-				if (actor)
-				{
-					for (Creator creator : Creator.actors)
-					{
-						if (creator.getName().toLowerCase().matches(name.toLowerCase()))
-						{
-							creators.add(creator);
-						}
-					}
-				}
-				
-				else if (director)
-				{
-					for (Creator creator : Creator.directors)
-					{
-						if (creator.getName().toLowerCase().matches(name.toLowerCase()))
-						{
-							creators.add(creator);
-						}
-					}
-				}
-				
-				else if (producer)
-				{
-					for (Creator creator : Creator.producers)
-					{
-						if (creator.getName().toLowerCase().matches(name.toLowerCase()))
-						{
-							creators.add(creator);
-						}
-					}
-				}
-			}
-		Collections.sort(creators, Creator.TITLE_COMPARATOR);
-		return creators;
 	}
 	
 	/**
@@ -326,6 +245,8 @@ public class MovieDatabase implements Serializable{
 	}
 	
 	/**
+	 * Takes in LinkedHashMaps to store in this object. Here because we need an object to write to a binary file containing all the information 
+	 * needed for the program to function.
 	 * @param LinkedHashMap<String, ArrayList<Creator>> associated with actors
 	 * @param LinkedHashMap<String, ArrayList<Creator>> associated with directors
 	 * @param LinkedHashMap<String, ArrayList<Creator>> associated with producers

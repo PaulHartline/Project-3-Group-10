@@ -15,9 +15,7 @@ import java.util.ArrayList;
 public class Creator extends Show {
 
 	
-	/**
-	 * 
-	 */
+	/** SerialID that lets us implement Serializable */
 	private static final long serialVersionUID = 1L;
 	/** List that stores information about actors  */
 	public static ArrayList<Creator> actors = new ArrayList<Creator>();
@@ -47,11 +45,17 @@ public class Creator extends Show {
 	private String credit;
 	/** The role the creator had in the production */
 	private String role;
+	/** Amount of movie acting credits the creator has */
 	private static int mActingCredit = 0;
+	/** Amount of series acting credits the creator has */
 	private static int sActingCredit = 0;
+	/** Amount of movie producing credits the creator has */
 	private static int mProducingCredit = 0;
+	/** Amount of series producing credits the creator has */
 	private static int sProducingCredit = 0;
+	/** Amount of movie directing credits the creator has */
 	private static int mDirectingCredit = 0;
+	/** Amount of series directing credits the creator has */
 	private static int sDirectingCredit = 0;
 	/**
 	 * Constructor for Creator: actor
@@ -823,21 +827,45 @@ if (nextLine.contains(",") && nextLine.contains("\t")) {
 		
 	}
 	}
+	
+	/**
+	 * @return double for the amount of series acting credits this creator has
+	 */
 	public static double getSAC(){
 		return (double)sActingCredit;
 	}
+	
+	/**
+	 * @return double for the amount of movie acting credits this creator has
+	 */
 	public static double getMAC(){
 		return (double)mActingCredit;
 	}
+	
+	/**
+	 * @return double for the amount of series directing credits this creator has
+	 */
 	public static double getSDC(){
 		return (double)sDirectingCredit;
 	}
+	
+	/**
+	 * @return double for the amount of movie directing credits this creator has
+	 */
 	public static double getMDC(){
 		return (double)mDirectingCredit;
 	}
+	
+	/**
+	 * @return double for the amount of series producing credits this creator has
+	 */
 	public static double getSPC(){
 		return (double)sProducingCredit;
 	}
+	
+	/**
+	 * @return double for the amount of movie producing credits this creator has
+	 */
 	public static double getMPC(){
 		return (double)mProducingCredit;
 	}

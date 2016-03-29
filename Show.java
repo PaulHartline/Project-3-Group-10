@@ -2,15 +2,16 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- * Project #1
- * CS 2334, Section 011
- * Feb 16, 2016
+ * Project #3
+ * CS 2334, Section 010
+ * Mar 26, 2016
  * <P>
  * Superclass for movies and TV shows to extend
  * </P>
  */
 public class Show implements Serializable{
 
+	/** SerialID that lets us implement Serializable */
 	private static final long serialVersionUID = 1L;
 	
 	/**Name of show*/
